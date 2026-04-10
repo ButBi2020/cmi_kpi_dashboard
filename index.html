@@ -32,35 +32,20 @@ button{cursor:pointer}
 .lsub{color:var(--mu);font-size:12px;margin-bottom:26px}
 .lf{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
 .lf label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--mu)}
-.lf input{padding:9px 11px;border:1px solid var(--bd);border-radius:var(--r);
-  background:var(--sf);color:var(--tx);font-size:14px}
-.lf input:focus{outline:none;border-color:var(--bl);box-shadow:0 0 0 3px rgba(18,85,160,.1)}
-#btn-login{width:100%;padding:10px;background:var(--bl);color:#fff;border:none;
-  border-radius:var(--r);font-size:14px;font-weight:600;margin-top:4px}
-#btn-login:hover{opacity:.88}
-#l-err{color:var(--rd);font-size:12px;margin-top:8px;padding:7px 10px;
-  background:var(--rd-bg);border-radius:var(--r);display:none}
+.lf input{padding:9px 11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--tx);font-size:14px}
+#btn-login{width:100%;padding:10px;background:var(--bl);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;margin-top:4px}
+#l-err{color:var(--rd);font-size:12px;margin-top:8px;padding:7px 10px;background:var(--rd-bg);border-radius:var(--r);display:none}
 
 /* TOPBAR */
-.topbar{height:var(--th);background:var(--sf);border-bottom:1px solid var(--bd);
-  display:flex;align-items:center;justify-content:space-between;padding:0 18px;
-  position:fixed;top:0;left:0;right:0;z-index:100}
-.tlogo{font-weight:700;font-size:14px}
-.tlogo span{color:var(--mu);font-weight:400}
+.topbar{height:var(--th);background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:fixed;top:0;left:0;right:0;z-index:100}
+.tlogo{font-weight:700;font-size:14px}.tlogo span{color:var(--mu);font-weight:400}
 .tright{display:flex;align-items:center;gap:10px}
 .tbadge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:12px}
 .tba{background:var(--bl-bg);color:var(--bl)}.tbm{background:var(--am-bg);color:var(--am)}
-.tav{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:11px;font-weight:700}
-#btn-logout{padding:5px 11px;border-radius:var(--r);border:1px solid var(--bd2);
-  background:transparent;color:var(--mu);font-size:11px}
-#btn-logout:hover{background:var(--sf2);color:var(--tx)}
-/* FIX 2: Live badge opacity */
-.sync-badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;cursor:pointer;opacity:0.6}
-.sync-badge:hover{opacity:1}
-.sync-ok{background:var(--gn-bg);color:var(--gn)}
-.sync-loading{background:var(--am-bg);color:var(--am)}
-.sync-err{background:var(--rd-bg);color:var(--rd)}
+.tav{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+#btn-logout{padding:5px 11px;border-radius:var(--r);border:1px solid var(--bd2);background:transparent;color:var(--mu);font-size:11px}
+.sync-badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;opacity:0.6;cursor:pointer}
+.sync-ok{background:var(--gn-bg);color:var(--gn)}.sync-loading{background:var(--am-bg);color:var(--am)}.sync-err{background:var(--rd-bg);color:var(--rd)}
 
 /* SHELL */
 #pg-app{display:none;flex-direction:column}
@@ -68,79 +53,49 @@ button{cursor:pointer}
 .lp{width:var(--lw);flex-shrink:0;background:var(--sf);border-right:1px solid var(--bd);overflow:hidden;display:flex;flex-direction:column}
 .lp-sc{flex:1;overflow-y:auto;padding:14px 13px}
 .rp{flex:1;overflow-y:auto;padding:18px 20px;background:var(--bg)}
-.lsec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;
-  color:var(--hi);margin:14px 0 7px}
+.lsec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--hi);margin:14px 0 7px}
 
-/* ACCORDION */
+/* ACCORDION (SIDEBAR) */
 .acc{border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:6px}
 .acc-h{display:flex;align-items:center;gap:7px;padding:9px 10px;cursor:pointer;user-select:none}
 .acc-h:hover,.acc-h.open{background:var(--bl-bg)}
 .ah-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .ah-name{flex:1;font-weight:600;font-size:12px;display:flex;justify-content:space-between;align-items:center}
-/* FIX 5: Latest month tag */
 .ah-last{font-size:9px;font-weight:400;color:var(--hi);background:var(--sf2);padding:1px 5px;border-radius:4px}
 .ah-st{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .st-ok{background:#1D9E75}.st-pend{background:#EF9F27}
-.ah-ch{font-size:9px;color:var(--hi);transition:transform .2s}
-.ah-ch.open{transform:rotate(90deg)}
-.acc-b{display:none;border-top:1px solid var(--bd);background:var(--sf2);padding:10px 11px}
-.acc-b.open{display:block}
-.ks-row{display:flex;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--bd)}
-.ks-l{font-size:11px;color:var(--mu);flex:1}
-.ks-v{font-size:12px;font-weight:600}.ks-d{font-size:10px;margin-left:4px}
+.ah-ch{font-size:9px;color:var(--hi);transition:transform .2s}.ah-ch.open{transform:rotate(90deg)}
+.acc-b{display:none;border-top:1px solid var(--bd);background:var(--sf2);padding:10px 11px}.acc-b.open{display:block}
+
+/* KPI ROWS IN SIDEBAR */
+.ks-row{display:flex;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--bd);gap:5px}
+.ks-l{font-size:11px;color:var(--mu);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ks-v{font-size:12px;font-weight:600}
+.ks-d{font-size:10px;font-weight:700}
 .du{color:var(--gn)}.dd{color:var(--rd)}.dn{color:var(--hi)}
-.ks-cmt{margin-top:7px;padding:6px 8px;background:var(--sf);border-radius:var(--r);
-  font-size:11px;color:var(--mu);font-style:italic;line-height:1.4;border:1px solid var(--bd)}
-.vc-btn{width:100%;margin-top:8px;padding:6px;border-radius:var(--r);
-  border:1px solid var(--bl-lt);background:var(--bl-bg);color:var(--bl);
-  font-size:11px;font-weight:600;cursor:pointer}
+.vc-btn{width:100%;margin-top:8px;padding:6px;border-radius:var(--r);border:1px solid var(--bl-lt);background:var(--bl-bg);color:var(--bl);font-size:11px;font-weight:600;cursor:pointer}
 
-/* INPUT FORM */
-.my-row{display:flex;gap:6px;margin-bottom:11px}
-.mysel{flex:1;padding:7px 8px;font-size:12px;font-weight:500;border:1px solid var(--bd);border-radius:var(--r)}
-.inp-st{display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:10px;padding:6px 9px;border-radius:var(--r);background:var(--sf2);border:1px solid var(--bd)}
-.badge{display:inline-flex;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
-.bg{background:var(--gn-bg);color:var(--gn)}.ba{background:var(--am-bg);color:var(--am)}
-.ki-list{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
-.ki label{font-size:11px;color:var(--mu);font-weight:600}
-.ki-in{padding:7px 9px;border:1px solid var(--bd);border-radius:var(--r);width:100%}
-.ki-ta{padding:7px 9px;border:1px solid var(--bd);border-radius:var(--r);width:100%;min-height:50px;font-family:inherit}
-.sv-btn{width:100%;padding:9px;border:none;border-radius:var(--r);background:var(--bl);color:#fff;font-weight:600}
-
-/* CHARTS AREA */
+/* CHARTS */
 .rp-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
-/* FIX 6: Back button */
-.btn-back{padding:5px 12px;background:var(--sf);border:1px solid var(--rd);color:var(--rd);
-  border-radius:var(--r);font-size:11px;font-weight:700;cursor:pointer}
-.btn-back:hover{background:var(--rd);color:#fff}
-.rp-title{font-size:17px;font-weight:700}
-.rp-sub{font-size:12px;color:var(--mu)}
+.btn-back{padding:5px 12px;background:var(--sf);border:1px solid var(--rd);color:var(--rd);border-radius:var(--r);font-size:11px;font-weight:700;cursor:pointer}
+.rp-title{font-size:17px;font-weight:700}.rp-sub{font-size:12px;color:var(--mu)}
 .charts-col{display:flex;flex-direction:column;gap:14px}
 .cc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:16px 18px}
-.cc-t{font-size:13px;font-weight:700;margin-bottom:2px}
-.cc-s{font-size:11px;color:var(--mu);margin-bottom:12px}
-.cc-w{position:relative;height:185px}
-.cc-w.tall{height:220px}
+.cc-t{font-size:13px;font-weight:700;margin-bottom:2px}.cc-s{font-size:11px;color:var(--mu);margin-bottom:12px}
+.cc-w{position:relative;height:185px}.cc-w.tall{height:220px}
 
-/* DATE RANGE BOX */
-.dr-box{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:10px 11px;margin-bottom:4px}
-.dr-quick{display:flex;gap:4px;margin-bottom:8px}
-.drq{padding:3px 9px;border-radius:12px;border:1px solid var(--bd);background:transparent;font-size:10px;font-weight:600;cursor:pointer}
-.drq:hover,.drq.act{background:var(--bl);color:#fff}
+/* HELPERS */
+.dr-box{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:10px 11px;margin-bottom:10px}
 .dr-row{display:flex;gap:5px;align-items:center;margin-bottom:6px}
-.dr-row label{font-size:10px;color:var(--mu);width:26px;font-weight:600}
 .drsel{flex:1;padding:5px 7px;border:1px solid var(--bd);border-radius:var(--r);font-size:11px}
 .dr-apply{width:100%;padding:6px;border:none;border-radius:var(--r);background:var(--bl);color:#fff;font-size:11px;font-weight:600}
-
-/* STATUS TABLE */
 .stbl-w{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;margin-bottom:14px}
-.stbl-h{padding:12px 16px;font-size:13px;font-weight:700;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between}
 table{width:100%;border-collapse:collapse}
 thead th{padding:8px 14px;text-align:left;font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;border-bottom:1px solid var(--bd)}
 tbody td{padding:9px 14px;font-size:12px;border-bottom:1px solid var(--bd)}
-
-#g-loader{position:fixed;inset:0;background:rgba(244,243,239,.85);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:12px}
+.badge{display:inline-flex;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.bg{background:var(--gn-bg);color:var(--gn)}.ba{background:var(--am-bg);color:var(--am)}
+#g-loader{position:fixed;inset:0;background:rgba(244,243,239,.85);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column}
 .gl-spin{width:26px;height:26px;border:3px solid var(--bd);border-top-color:var(--bl);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 </style>
@@ -164,20 +119,18 @@ tbody td{padding:9px 14px;font-size:12px;border-bottom:1px solid var(--bd)}
   <div class="topbar">
     <div class="tlogo">CMI <span>· KPI Dashboard</span></div>
     <div class="tright">
-      <span id="sync-badge" class="sync-badge sync-loading">Loading data…</span>
+      <span id="sync-badge" class="sync-badge sync-loading">Syncing…</span>
       <span id="t-badge" class="tbadge"></span>
-      <span id="t-dept-label" style="font-size:11px; font-weight:700; color:var(--bl)"></span> <span id="t-name" style="font-size:12px;color:var(--mu)"></span>
-      <div id="t-av" class="tav"></div> <button id="btn-logout">Sign out</button>
+      <span id="t-name" style="font-size:12px;color:var(--mu);margin-right:5px"></span>
+      <div id="t-av" class="tav"></div>
+      <button id="btn-logout" style="margin-left:10px">Sign out</button>
     </div>
   </div>
   <div class="shell">
     <div class="lp"><div class="lp-sc" id="lp-body"></div></div>
     <div class="rp">
       <div class="rp-header">
-        <div>
-          <div id="rp-title" class="rp-title">CMI Dashboard</div>
-          <div id="rp-sub" class="rp-sub">Select a department</div>
-        </div>
+        <div><div id="rp-title" class="rp-title">Dashboard</div><div id="rp-sub" class="rp-sub">Summary</div></div>
         <button id="btn-back-overview" class="btn-back hidden">BACK TO OVERVIEW</button>
       </div>
       <div id="rp-body"></div>
@@ -186,301 +139,210 @@ tbody td{padding:9px 14px;font-size:12px;border-bottom:1px solid var(--bd)}
 </div>
 
 <script>
-var SHEET_ID  = '1erlvjOnrRT90VMnCkNnqOU-xORkYidNqwAyxcWBjsVk';
-var SHEET_GID = '0';
-var SHEET_URL = 'https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/export?format=csv&gid='+SHEET_GID;
-var SCRIPT_URL = ''; 
-
-var MN  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-var NY  = new Date().getFullYear();
-var NM  = new Date().getMonth();
-var YRS = [2024, 2025, 2026, 2027, 2028];
-
-var DEPTS = [
-  {id:'PROD',  name:'Production', color:'#378ADD', ini:'PR', mgr:'Production Manager', purpose:'Deliver boats to plan, on time, with controlled labour.',
-   kpis:[{k:'Plan_Boats',l:'Plan Boats',u:'count',t:'i'},{k:'Actual_Boats',l:'Actual Boats',u:'count',t:'i'},{k:'OnTime_pct',l:'On-Time %',u:'%',t:'p'},{k:'Hours_Planned',l:'Hours Planned',u:'hrs',t:'i'},{k:'Hours_Actual',l:'Hours Actual',u:'hrs',t:'i'}],
-   overlayCharts:[{title:'Boats: Plan vs Actual',datasets:[{key:'Plan_Boats',label:'Plan',color:'#93C5FD',type:'bar'},{key:'Actual_Boats',label:'Actual',color:'#1D4ED8',type:'bar'}]},{title:'Hours: Planned vs Actual',datasets:[{key:'Hours_Planned',label:'Planned',color:'#86EFAC',type:'bar'},{key:'Hours_Actual',label:'Actual',color:'#16A34A',type:'bar'}]},{title:'On-Time %',datasets:[{key:'OnTime_pct',label:'On-Time %',color:'#F59E0B',type:'line'}]}]},
-  {id:'SALES', name:'Sales', color:'#1D9E75', ini:'SA', mgr:'Sales Manager', purpose:'Order intake quality and predictability.',
-   kpis:[{k:'Orders_Booked_USD',l:'Orders Booked',u:'USD',t:'c'},{k:'Target_USD',l:'Target',u:'USD',t:'c'},{k:'Dealer_Perf_Score',l:'Dealer Score',u:'pts',t:'p'},{k:'Conversion_pct',l:'Conversion %',u:'%',t:'p'},{k:'Pipeline_3mo_USD',l:'Pipeline 3mo',u:'USD',t:'c'}]},
-  {id:'QA',    name:'Quality Assurance', color:'#D4537E', ini:'QA', mgr:'QA Manager', purpose:'Gatekeeper of first-time quality.',
-   kpis:[{k:'FirstTimePass_pct',l:'First Time Pass %',u:'%',t:'p'},{k:'Factory_Defects_pct',l:'Factory Defects %',u:'%',t:'p'},{k:'Warranty_Linked_pct',l:'Warranty Linked %',u:'%',t:'p'},{k:'Doc_Control_pct',l:'Doc Control %',u:'%',t:'p'}]},
-  {id:'FIN',   name:'Finance', color:'#EF9F27', ini:'FN', mgr:'FN Manager', purpose:'Cash, margin, and discipline.',
-   kpis:[{k:'Revenue_USD',l:'Revenue',u:'USD',t:'c'},{k:'Budget_USD',l:'Budget',u:'USD',t:'c'},{k:'Gross_Margin_pct',l:'Gross Margin %',u:'%',t:'p'},{k:'Cash_Balance_USD',l:'Cash Balance',u:'USD',t:'c'}]},
-  {id:'SCM',   name:'Supply Chain', color:'#D85A30', ini:'SC', mgr:'SC Manager', purpose:'Material availability without excess cash burn.',
-   kpis:[{k:'OTIF_Customer_pct',l:'OTIF Customer %',u:'%',t:'p'},{k:'OnTime_Supplier_pct',l:'On-Time Supplier %',u:'%',t:'p'},{k:'PR_Turnaround_Days',l:'PR Turnaround',u:'days',t:'p'},{k:'Inventory_Value_USD',l:'Inventory Value',u:'USD',t:'c'}]},
-  {id:'HR',    name:'Human Resources', color:'#7F77DD', ini:'HR', mgr:'HR Manager', purpose:'Stability and capability.',
-   kpis:[{k:'Headcount',l:'Headcount',u:'ppl',t:'i'},{k:'Turnover_pct',l:'Turnover %',u:'%',t:'p'},{k:'Overtime_Hours',l:'Overtime Hours',u:'hrs',t:'i'},{k:'Training_Hours',l:'Training Hours',u:'hrs',t:'i'},{k:'LTI_Count',l:'LTI Count',u:'cnt',t:'i'},{k:'Hours_Worked',l:'Hours Worked',u:'hrs',t:'i'}]},
-  {id:'CS',    name:'Customer Service', color:'#0891B2', ini:'CS', mgr:'CS Manager', purpose:'Warranty containment and customer confidence.',
-   kpis:[{k:'Claims_Opened',l:'Claims Opened',u:'cnt',t:'i'},{k:'Claims_Closed',l:'Claims Closed',u:'cnt',t:'i'},{k:'Avg_Closure_Days',l:'Avg Closure Days',u:'days',t:'p'},{k:'Customer_Sat_pct',l:'Customer Sat %',u:'%',t:'p'}]},
-  {id:'DESIGN',name:'Design & Tech', color:'#8B5CF6', ini:'DT', mgr:'Design Manager', purpose:'Correct drawings, BOMs, minimal disruption.',
-   kpis:[{k:'BOM_Accuracy_pct',l:'BOM Accuracy %',u:'%',t:'p'},{k:'Drawings_Issued_vs_Required_pct',l:'Drawings Issued %',u:'%',t:'p'}]},
-  {id:'IT',    name:'IT', color:'#475569', ini:'IT', mgr:'IT Manager', purpose:'System reliability and security.',
-   kpis:[{k:'Uptime_pct',l:'System Uptime %',u:'%',t:'p'},{k:'Cyber_Incidents',l:'Cyber Incidents',u:'cnt',t:'i'}]},
-  {id:'MKTG',  name:'Marketing', color:'#EC4899', ini:'MK', mgr:'Marketing Manager', purpose:'Lead generation efficiency.',
-   kpis:[{k:'Engagement_Growth_pct',l:'Engagement Growth %',u:'%',t:'p'},{k:'Leads_Generated',l:'Leads Generated',u:'cnt',t:'i'}]},
-  {id:'PD',    name:'Project Dev', color:'#14B8A6', ini:'PD', mgr:'Project Dev Lead', purpose:'Product improvement.',
-   kpis:[{k:'StageGate_OnTime_pct',l:'Stage Gate On-Time %',u:'%',t:'p'},{k:'ECN_LeadTime_Days',l:'ECN Lead Time',u:'days',t:'p'}]},
-  {id:'PROP',  name:'Property', color:'#84CC16', ini:'PP', mgr:'Property Manager', purpose:'Facility compliance and maintenance.',
-   kpis:[{k:'Maint_Backlog_Count',l:'Maint Backlog',u:'cnt',t:'i'},{k:'Fire_OHS_Comp_pct',l:'Fire/OHS Comp %',u:'%',t:'p'}]},
-  {id:'TL',    name:'TL Handover', color:'#F97316', ini:'TL', mgr:'TL Manager', purpose:'Clean handover and brand experience.',
-   kpis:[{k:'Handover_OnTime_pct',l:'Handover On-Time %',u:'%',t:'p'},{k:'Post_Handover_Defects',l:'Post-Handover Defects',u:'cnt',t:'i'}]},
-  {id:'CID',   name:'CID', color:'#6366F1', ini:'CI', mgr:'CID Lead', purpose:'Structural improvement.',
-   kpis:[{k:'Savings_USD',l:'Savings',u:'USD',t:'c'},{k:'ISO_Compliance_pct',l:'ISO Compliance %',u:'%',t:'p'}]},
-];
-
-var USERS = {
-  bod:{role:'bod',name:'Managing Director',ini:'MD',color:'#EF9F27',pass:'bod123'},
-  production:{role:'dept',dept:'PROD',name:'Production',ini:'RK',color:'#378ADD',pass:'production123'},
-  sales:{role:'dept',dept:'SALES',name:'Sales',ini:'MS',color:'#1D9E75',pass:'sales123'},
-  qa:{role:'dept',dept:'QA',name:'QA',ini:'DA',color:'#D4537E',pass:'qa123'},
-  finance:{role:'dept',dept:'FIN',name:'Finance',ini:'PD',color:'#EF9F27',pass:'finance123'},
-  supply:{role:'dept',dept:'SCM',name:'Supply',ini:'LT',color:'#D85A30',pass:'supply123'},
-  hr:{role:'dept',dept:'HR',name:'HR',ini:'MC',color:'#7F77DD',pass:'hr123'},
-  cs:{role:'dept',dept:'CS',name:'CS',ini:'VN',color:'#0891B2',pass:'cs123'},
-  design:{role:'dept',dept:'DESIGN',name:'Design',ini:'JM',color:'#8B5CF6',pass:'design123'},
-  it:{role:'dept',dept:'IT',name:'IT',ini:'IT',color:'#475569',pass:'it123'},
-  marketing:{role:'dept',dept:'MKTG',name:'Marketing',ini:'NP',color:'#EC4899',pass:'marketing123'},
-  project_dev:{role:'dept',dept:'PD',name:'Project',ini:'PL',color:'#14B8A6',pass:'project_dev123'},
-  property:{role:'dept',dept:'PROP',name:'Property',ini:'PM',color:'#84CC16',pass:'property123'},
-  tl_handover:{role:'dept',dept:'TL',name:'Thailand',ini:'PH',color:'#F97316',pass:'tl_handover123'},
-  cid:{role:'dept',dept:'CID',name:'CID',ini:'CI',color:'#6366F1',pass:'cid123'}
-};
-
+var SHEET_ID = '1erlvjOnrRT90VMnCkNnqOU-xORkYidNqwAyxcWBjsVk', SHEET_GID = '0';
+var SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
+var MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var NY = new Date().getFullYear(), NM = new Date().getMonth();
 var GS_DATA = [], GS_HDR = [], U=null, deptId=null, selY=NY, selM=NM;
 var drF={y:NY-1,m:0}, drT={y:NY,m:NM}, accOpen=null, CH={};
 
+var DEPTS = [
+  {id:'PROD',  name:'Production', color:'#378ADD', ini:'PR', mgr:'Production Manager',
+   kpis:[{k:'Plan_Boats',l:'Plan Boats',u:'count',t:'i'},{k:'Actual_Boats',l:'Actual Boats',u:'count',t:'i'},{k:'OnTime_pct',l:'On-Time %',u:'%',t:'p'},{k:'Hours_Planned',l:'Hours Planned',u:'hrs',t:'i'},{k:'Hours_Actual',l:'Hours Actual',u:'hrs',t:'i'}],
+   overlayCharts:[{title:'Boats: Plan vs Actual',datasets:[{key:'Plan_Boats',label:'Plan',color:'#93C5FD',type:'bar'},{key:'Actual_Boats',label:'Actual',color:'#1D4ED8',type:'bar'}]}]},
+  {id:'SALES', name:'Sales', color:'#1D9E75', ini:'SA', mgr:'Sales Manager',
+   kpis:[{k:'Orders_Booked_USD',l:'Orders Booked',u:'USD',t:'c'},{k:'Target_USD',l:'Target',u:'USD',t:'c'}],
+   overlayCharts:[{title:'Sales vs Target',datasets:[{key:'Target_USD',label:'Target',color:'#A7F3D0',type:'bar'},{key:'Orders_Booked_USD',label:'Actual',color:'#059669',type:'bar'}]}]},
+  {id:'QA',    name:'Quality Assurance', color:'#D4537E', ini:'QA', mgr:'QA Manager', kpis:[{k:'FirstTimePass_pct',l:'First Pass',u:'%',t:'p'},{k:'Factory_Defects_pct',l:'Defects',u:'%',t:'p'}]},
+  {id:'FIN',   name:'Finance', color:'#EF9F27', ini:'FN', mgr:'FN Manager', kpis:[{k:'Revenue_USD',l:'Revenue',u:'USD',t:'c'},{k:'Cash_Balance_USD',l:'Cash',u:'USD',t:'c'}]},
+  {id:'SCM',   name:'Supply Chain', color:'#D85A30', ini:'SC', mgr:'SC Manager', kpis:[{k:'OTIF_Customer_pct',l:'OTIF',u:'%',t:'p'}]},
+  {id:'HR',    name:'Human Resources', color:'#7F77DD', ini:'HR', mgr:'HR Manager', kpis:[{k:'Headcount',l:'Headcount',u:'ppl',t:'i'},{k:'Turnover_pct',l:'Turnover',u:'%',t:'p'}]},
+  {id:'CS',    name:'Customer Service', color:'#0891B2', ini:'CS', mgr:'CS Manager', kpis:[{k:'Customer_Sat_pct',l:'Sat %',u:'%',t:'p'}]},
+  {id:'IT',    name:'IT', color:'#475569', ini:'IT', mgr:'IT Manager', kpis:[{k:'Uptime_pct',l:'Uptime',u:'%',t:'p'}]},
+  {id:'TL',    name:'TL Handover', color:'#F97316', ini:'TL', mgr:'TL Manager', kpis:[{k:'Handover_OnTime_pct',l:'On-Time',u:'%',t:'p'}]}
+];
+
+var USERS = {
+  bod:        {role:'bod', name:'Managing Director', ini:'MD', color:'#EF9F27', pass:'bod123'},
+  production: {role:'dept', dept:'PROD',   name:'Production', ini:'RK', color:'#378ADD', pass:'production123'},
+  sales:      {role:'dept', dept:'SALES',  name:'Sales',      ini:'MS', color:'#1D9E75', pass:'sales123'},
+  qa:         {role:'dept', dept:'QA',     name:'QA',         ini:'DA', color:'#D4537E', pass:'qa123'},
+  finance:    {role:'dept', dept:'FIN',    name:'Finance',    ini:'PD', color:'#EF9F27', pass:'finance123'},
+  supply:     {role:'dept', dept:'SCM',    name:'Supply',     ini:'LT', color:'#D85A30', pass:'supply123'},
+  hr:         {role:'dept', dept:'HR',     name:'HR',         ini:'MC', color:'#7F77DD', pass:'hr123'},
+  cs:         {role:'dept', dept:'CS',     name:'CS',         ini:'VN', color:'#0891B2', pass:'cs123'},
+  design:     {role:'dept', dept:'DESIGN', name:'Design',     ini:'JM', color:'#8B5CF6', pass:'design123'},
+  it:         {role:'dept', dept:'IT',     name:'IT',         ini:'IT', color:'#475569', pass:'it123'},
+  marketing:  {role:'dept', dept:'MKTG',   name:'Marketing',  ini:'NP', color:'#EC4899', pass:'marketing123'},
+  project_dev:{role:'dept', dept:'PD',     name:'Project',    ini:'PL', color:'#14B8A6', pass:'project_dev123'},
+  property:   {role:'dept', dept:'PROP',   name:'Property',   ini:'PM', color:'#84CC16', pass:'property123'},
+  tl_handover:{role:'dept', dept:'TL',     name:'Thailand',   ini:'PH', color:'#F97316', pass:'tl_handover123'},
+  cid:        {role:'dept', dept:'CID',    name:'CID',        ini:'CI', color:'#6366F1', pass:'cid123'}
+};
+
 function el(id){return document.getElementById(id);}
 
+function parseCSV(text) {
+  var rows = [], cur = [], field = '', inQ = false;
+  for (var i = 0; i < text.length; i++) {
+    var ch = text[i];
+    if (inQ) { if (ch === '"' && text[i + 1] === '"') { field += '"'; i++; } else if (ch === '"') inQ = false; else field += ch; }
+    else { if (ch === '"') inQ = true; else if (ch === ',') { cur.push(field); field = ''; } else if (ch === '\n' || (ch === '\r' && text[i + 1] === '\n')) { if (ch === '\r') i++; cur.push(field); field = ''; rows.push(cur); cur = []; } else field += ch; }
+  }
+  if (field || cur.length) cur.push(field); rows.push(cur); return rows;
+}
+
 function fetchSheetData(cb){
-  setSyncBadge('loading','Syncing…');
+  el('g-loader').classList.remove('hidden');
   fetch(SHEET_URL+'&t='+Date.now()).then(r=>r.text()).then(csv=>{
-    var parsed = parseCSV(csv);
-    GS_HDR = parsed[0].map(h=>h.trim());
-    GS_DATA = parsed.slice(1).filter(r=>r[0]&&r[0].trim());
-    setSyncBadge('ok','Live · '+GS_DATA.length+' rows');
-    if(cb)cb();
-  }).catch(e=>{ setSyncBadge('err','Offline'); if(cb)cb(); });
+    var p = parseCSV(csv);
+    GS_HDR = p[0].map(h=>h.trim()); 
+    GS_DATA = p.slice(1).filter(r=>r[0]&&r[0].trim());
+    el('sync-badge').textContent = 'Live · ' + GS_DATA.length + ' rows'; 
+    el('sync-badge').className='sync-badge sync-ok';
+    el('g-loader').classList.add('hidden'); if(cb)cb();
+  }).catch(e => { alert("Error fetching data. Check your Sheet settings."); el('g-loader').classList.add('hidden'); });
 }
 
-function parseCSV(text){
-  var rows=[], cur=[], field='', inQ=false;
-  for(var i=0;i<text.length;i++){
-    var ch=text[i];
-    if(inQ){if(ch==='"'&&text[i+1]==='"'){field+='"';i++;}else if(ch==='"')inQ=false;else field+=ch;}
-    else{if(ch==='"')inQ=true;else if(ch===','){cur.push(field);field='';}else if(ch==='\n'||(ch==='\r'&&text[i+1]==='\n')){if(ch==='\r')i++;cur.push(field);field='';rows.push(cur);cur=[];}else field+=ch;}
-  }
-  if(field||cur.length)cur.push(field);rows.push(cur);return rows;
+function getLatestRecordInfo(did) {
+  var rows = GS_DATA.filter(r => r[0] === did);
+  if (!rows.length) return null;
+  var last = rows[rows.length - 1];
+  var prev = rows.length > 1 ? rows[rows.length - 2] : null;
+  return { last, prev, m: parseInt(last[1]), y: parseInt(last[2]) };
 }
 
-function setSyncBadge(state, txt){ var b=el('sync-badge'); b.textContent=txt; b.className='sync-badge sync-'+state; }
-
-// FIX 4: Khớp logic tháng giữa Sheet (1-12) và JS (0-11)
-function getGSVal(dept, year, month, key){
-  var ki = GS_HDR.indexOf(key); if(ki<0) return null;
-  for(var i=0;i<GS_DATA.length;i++){
-    var r=GS_DATA[i];
-    if(r[0]===dept && parseInt(r[1])===(month+1) && parseInt(r[2])===year){
-      var v=r[ki]; if(v===''||v==null)return null;
-      return isNaN(parseFloat(v))?v:parseFloat(v);
-    }
-  }
-  return null;
-}
-
-function getGSRow(dept, year, month){
-  for(var i=0;i<GS_DATA.length;i++){
-    var r=GS_DATA[i];
-    if(r[0]===dept && parseInt(r[1])===(month+1) && parseInt(r[2])===year) return r;
-  }
-  return null;
-}
-
-function doLogin(){
-  var u=el('l-u').value.trim().toLowerCase(), p=el('l-p').value, acc=USERS[u];
-  if(!acc||acc.pass!==p){ el('l-err').textContent='Wrong credentials'; el('l-err').style.display='block'; return; }
-  U=Object.assign({},acc,{username:u});
-  el('pg-login').style.display='none'; el('pg-app').style.display='flex';
-  el('t-av').textContent=U.ini; el('t-av').style.cssText=`background:${U.color}25;color:${U.color}`;
-  el('t-name').textContent=U.name;
-  el('t-dept-label').textContent = U.role==='bod' ? '' : U.dept; // Chữ HR thứ 1
-
-  fetchSheetData(()=>{
-    if(U.role==='bod'){ el('t-badge').textContent='Management'; el('t-badge').className='tbadge tbm'; buildBodLeft(); renderBodRight(null); }
-    else { el('t-badge').textContent='Department'; el('t-badge').className='tbadge tba'; deptId=U.dept; buildDeptLeft(); renderDeptRight(); }
-  });
-}
-
-function doLogout(){ location.reload(); }
-
-function buildDeptLeft(){
-  var dept=DEPTS.find(d=>d.id===deptId), row=getGSRow(deptId,selY,selM), saved=!!row;
-  var inputs=dept.kpis.map(k=>{
-    var v=saved?getGSVal(deptId,selY,selM,k.k):null;
-    return `<div class="ki"><label>${k.l} (${k.u})</label><input class="ki-in" type="number" id="ki-${k.k}" step="any" value="${v!=null?v:''}"></div>`;
-  }).join('');
-  el('lp-body').innerHTML = `
-    <div class="lsec">Period</div>
-    <div class="my-row">
-      <select class="mysel" id="s-m">${MN.map((m,i)=>`<option value="${i}" ${i===selM?'selected':''}>${m}</option>`).join('')}</select>
-      <select class="mysel" id="s-y">${YRS.map(y=>`<option value="${y}" ${y===selY?'selected':''}>${y}</option>`).join('')}</select>
-    </div>
-    <div class="inp-st"><span style="font-size:11px">Status</span><span class="badge ${saved?'bg':'ba'}">${saved?'Submitted':'Pending'}</span></div>
-    <div class="ki-list">${inputs}</div>
-    <textarea class="ki-ta" id="ki-cmt" placeholder="Notes...">${saved?getGSVal(deptId,selY,selM,'comment')||'':''}</textarea>
-    <button class="sv-btn" id="sv-btn">Save KPIs</button>
-    <div class="lsec" style="margin-top:20px">Chart Range</div>
-    <div class="dr-box">
-      <div class="dr-row"><label>From</label><select class="drsel" id="df-m">${MN.map((m,i)=>`<option value="${i}" ${i===drF.m?'selected':''}>${m}</option>`).join('')}</select><select class="drsel" id="df-y">${YRS.map(y=>`<option value="${y}" ${y===drF.y?'selected':''}>${y}</option>`).join('')}</select></div>
-      <div class="dr-row"><label>To</label><select class="drsel" id="dt-m">${MN.map((m,i)=>`<option value="${i}" ${i===drT.m?'selected':''}>${m}</option>`).join('')}</select><select class="drsel" id="dt-y">${YRS.map(y=>`<option value="${y}" ${y===drT.y?'selected':''}>${y}</option>`).join('')}</select></div>
-      <button class="dr-apply" id="dr-apply-d">Apply Range</button>
-    </div>`;
-}
-
-// FIX 5: Tìm tháng cuối cùng có dữ liệu
-function getLatestMonth(did){
-  var lastRow = [...GS_DATA].reverse().find(r=>r[0]===did);
-  if(lastRow) return MN[parseInt(lastRow[1])-1] + ' ' + lastRow[2];
-  return 'No Data';
+function getGSVal(dept, y, m, k){
+  var ki = GS_HDR.indexOf(k); if(ki<0) return null;
+  var r = GS_DATA.find(r=>r[0]===dept && parseInt(r[1])===(m) && parseInt(r[2])===(y));
+  return r && r[ki] ? parseFloat(r[ki]) : null;
 }
 
 function buildBodLeft(){
   var html = `<div class="lsec">Chart Range</div><div class="dr-box">
-    <div class="dr-row"><label>From</label><select class="drsel" id="bdf-m">${MN.map((m,i)=>`<option value="${i}" ${i===drF.m?'selected':''}>${m}</option>`).join('')}</select><select class="drsel" id="bdf-y">${YRS.map(y=>`<option value="${y}" ${y===drF.y?'selected':''}>${y}</option>`).join('')}</select></div>
-    <div class="dr-row"><label>To</label><select class="drsel" id="bdt-m">${MN.map((m,i)=>`<option value="${i}" ${i===drT.m?'selected':''}>${m}</option>`).join('')}</select><select class="drsel" id="bdt-y">${YRS.map(y=>`<option value="${y}" ${y===drT.y?'selected':''}>${y}</option>`).join('')}</select></div>
-    <button class="dr-apply" id="dr-apply-b">Apply Range</button></div><div class="lsec">Departments</div>`;
+    <div class="dr-row"><label>From</label><select class="drsel" id="bdf-m">${MN.map((m,i)=>`<option value="${i}" ${i===drF.m?'selected':''}>${m}</option>`).join('')}</select><select class="drsel" id="bdf-y">${[2024,2025,2026].map(y=>`<option value="${y}" ${y===drF.y?'selected':''}>${y}</option>`).join('')}</select></div>
+    <div class="dr-row"><label>To</label><select class="drsel" id="bdt-m">${MN.map((m,i)=>`<option value="${i}" ${i===drT.m?'selected':''}>${m}</option>`).join('')}</select><select class="drsel" id="bdt-y">${[2024,2025,2026].map(y=>`<option value="${y}" ${y===drT.y?'selected':''}>${y}</option>`).join('')}</select></div>
+    <button class="dr-apply" onclick="applyBodRange()">Apply Range</button></div><div class="lsec">Departments</div>`;
+  
   DEPTS.forEach(d=>{
-    var has = !!getGSRow(d.id,NY,NM), open = accOpen===d.id;
+    var info = getLatestRecordInfo(d.id);
+    var has = !!info, open = accOpen===d.id;
+    var lastMonthStr = has ? MN[info.m-1] + ' ' + info.y : 'No data';
+    
     html += `<div class="acc" id="acc-${d.id}">
-      <div class="acc-h ${open?'open':''}" data-dept="${d.id}">
+      <div class="acc-h ${open?'open':''}" onclick="toggleAcc('${d.id}')">
         <span class="ah-dot" style="background:${d.color}"></span>
-        <span class="ah-name">${d.name} <span class="ah-last">${getLatestMonth(d.id)}</span></span>
+        <span class="ah-name">${d.name} <span class="ah-last">${lastMonthStr}</span></span>
         <span class="ah-st ${has?'st-ok':'st-pend'}"></span>
         <span class="ah-ch ${open?'open':''}">▶</span>
       </div>
-      <div class="acc-b ${open?'open':''}" id="ab-${d.id}">${buildAccBody(d)}</div>
+      <div class="acc-b ${open?'open':''}" id="ab-${d.id}">${buildAccBody(d, info)}</div>
     </div>`;
   });
   el('lp-body').innerHTML = html;
 }
 
-function buildAccBody(dept){
-  var row=getGSRow(dept.id,NY,NM);
-  var rows=dept.kpis.map(k=>{
-    var v=row?getGSVal(dept.id,NY,NM,k.k):null;
-    return `<div class="ks-row"><span class="ks-l">${k.l}</span><span class="ks-v" style="color:${dept.color}">${v!=null?fmtV(v,k):'—'}</span></div>`;
+function buildAccBody(dept, info){
+  if (!info) return '<div style="padding:10px;color:var(--hi)">No data submitted yet.</div>';
+  var kiAt = (row, key) => {
+    var idx = GS_HDR.indexOf(key);
+    return (idx >= 0 && row[idx]) ? parseFloat(row[idx]) : null;
+  };
+  var rows = dept.kpis.map(k => {
+    var v = kiAt(info.last, k.k);
+    var pv = info.prev ? kiAt(info.prev, k.k) : null;
+    var diff = '', cls = 'dn';
+    if (v != null && pv != null && pv !== 0) {
+      var p = ((v - pv) / Math.abs(pv) * 100).toFixed(1);
+      diff = (p >= 0 ? '▲' : '▼') + Math.abs(p) + '%';
+      cls = p >= 0 ? 'du' : 'dd';
+    }
+    return `<div class="ks-row">
+      <span class="ks-l">${k.l}</span>
+      <span class="ks-v" style="color:${dept.color}">${fmtV(v, k)}</span>
+      ${diff ? `<span class="ks-d ${cls}">${diff}</span>` : ''}
+    </div>`;
   }).join('');
-  return `<div>${rows}</div><button class="vc-btn" data-dept="${dept.id}">View detailed charts →</button>`;
+  return `<div>${rows}</div><button class="vc-btn" onclick="renderBodRight('${dept.id}')">View detailed charts →</button>`;
 }
 
-function renderDeptRight(){
-  var dept=DEPTS.find(d=>d.id===deptId); el('rp-title').textContent=dept.name; el('rp-sub').textContent=dept.purpose;
-  var range=buildRange(deptId); killCharts('d_'); el('rp-body').innerHTML='<div class="charts-col" id="d-col"></div>';
-  var col=el('d-col');
-  if(dept.overlayCharts){
-    dept.overlayCharts.forEach((oc,i)=>renderOverlayChart(col,'d_oc_'+i,oc,range,dept.color));
-  } else {
-    dept.kpis.forEach((k,i)=>{
-      var vals=range.dkeys.map(dk=>getGSVal(deptId,dk.y,dk.m,k.k));
-      var div=document.createElement('div'); div.className='cc';
-      div.innerHTML=`<div class="cc-t">${k.l}</div><div class="cc-s">${k.u}</div><div class="cc-w"><canvas id="d_${i}"></canvas></div>`;
-      col.appendChild(div); CH['d_'+i]=mkLine('d_'+i,range.labels,k.l,vals,dept.color,k.u);
-    });
-  }
+function doLogin(){
+  var u=el('l-u').value.trim().toLowerCase(), p=el('l-p').value, acc=USERS[u];
+  if(!acc || acc.pass!==p) { el('l-err').textContent='Wrong username/password'; el('l-err').style.display='block'; return; }
+  U=acc; el('pg-login').style.display='none'; el('pg-app').style.display='flex';
+  el('t-av').textContent=U.ini; el('t-av').style.background=U.color+'25'; el('t-name').textContent=U.name;
+  fetchSheetData(()=>{ if(U.role==='bod') { buildBodLeft(); renderBodRight(null); } else { deptId=U.dept; buildDeptLeft(); renderDeptRight(); } });
 }
+
+function toggleAcc(id){ accOpen = (accOpen === id ? null : id); buildBodLeft(); if(accOpen) renderBodRight(accOpen); }
+function applyBodRange(){ drF={m:parseInt(el('bdf-m').value), y:parseInt(el('bdf-y').value)}; drT={m:parseInt(el('bdt-m').value), y:parseInt(el('bdt-y').value)}; renderBodRight(accOpen); }
 
 function renderBodRight(id){
   killCharts('b_'); var body=el('rp-body');
   if(!id){
-    el('btn-back-overview').classList.add('hidden');
-    el('rp-title').textContent='CMI Overview'; el('rp-sub').textContent='Consolidated performance';
-    var tRows=DEPTS.map(d=>{
-      var sub=!!getGSRow(d.id,NY,NM);
-      return `<tr><td>${d.name}</td><td>${d.mgr}</td><td><span class="badge ${sub?'bg':'ba'}">${sub?'Done':'Pending'}</span></td><td><button class="vc-btn" style="margin:0;width:auto;padding:3px 10px" data-dept="${d.id}">View</button></td></tr>`;
+    el('btn-back-overview').classList.add('hidden'); el('rp-title').textContent='CMI Overview'; el('rp-sub').textContent='Consolidated performance';
+    var tRows = DEPTS.map(d=>{
+      var info = getLatestRecordInfo(d.id);
+      return `<tr><td>${d.name}</td><td>${d.mgr}</td><td><span class="badge ${info?'bg':'ba'}">${info?'Active':'Pending'}</span></td><td><button class="vc-btn" style="margin:0" onclick="toggleAcc('${d.id}')">View</button></td></tr>`;
     }).join('');
-    body.innerHTML=`<div class="stbl-w"><table><thead><tr><th>Dept</th><th>Manager</th><th>Status</th><th>Action</th></tr></thead><tbody>${tRows}</tbody></table></div>`;
+    var chartsHtml = DEPTS.map(d=>`<div class="cc"><div class="cc-t">${d.name} Trend</div><div class="cc-w"><canvas id="b_ov_${d.id}"></canvas></div></div>`).join('');
+    body.innerHTML = `<div class="stbl-w"><table><thead><tr><th>Dept</th><th>Manager</th><th>Status</th><th>Action</th></tr></thead><tbody>${tRows}</tbody></table></div><div class="charts-col">${chartsHtml}</div>`;
+    DEPTS.forEach(d=>renderOverviewChart(`b_ov_${d.id}`, d));
     return;
   }
   el('btn-back-overview').classList.remove('hidden');
-  var dept=DEPTS.find(d=>d.id===id); el('rp-title').textContent=dept.name; el('rp-sub').textContent=dept.purpose;
-  var range=buildRange(id); body.innerHTML='<div class="charts-col" id="b-col"></div>';
-  var col=el('b-col');
-  if(dept.overlayCharts){
-    dept.overlayCharts.forEach((oc,i)=> {
-       var oldId = deptId; deptId = id; renderOverlayChart(col,'b_oc_'+i,oc,range,dept.color); deptId = oldId;
-    });
+  var d=DEPTS.find(x=>x.id===id); el('rp-title').textContent=d.name; el('rp-sub').textContent=d.mgr; body.innerHTML='<div class="charts-col" id="b-col"></div>';
+  if(d.overlayCharts) d.overlayCharts.forEach((oc,i)=>renderOverlayChart(`b_oc_${i}`, d, oc, 'b-col'));
+  else d.kpis.forEach((k,i)=>renderSingleChart(`b_${i}`, d, k, 'b-col'));
+}
+
+function renderOverviewChart(cid, dept){
+  var range = buildRange();
+  if(dept.overlayCharts) {
+    var oc = dept.overlayCharts[0];
+    var ds = oc.datasets.map(ds=>({label:ds.label, data:range.dkeys.map(dk=>getGSVal(dept.id,dk.y,dk.m+1,ds.key)), borderColor:ds.color, backgroundColor:ds.color+'55', type:ds.type, tension:0.3, fill:true, spanGaps:true}));
+    CH[cid] = new Chart(el(cid),{data:{labels:range.labels, datasets:ds}, options:getOpts()});
   } else {
-    dept.kpis.forEach((k,i)=>{
-      var vals=range.dkeys.map(dk=>getGSVal(id,dk.y,dk.m,k.k));
-      var div=document.createElement('div'); div.className='cc';
-      div.innerHTML=`<div class="cc-t">${k.l}</div><div class="cc-s">${k.u}</div><div class="cc-w"><canvas id="b_${i}"></canvas></div>`;
-      col.appendChild(div); CH['b_'+i]=mkLine('b_'+i,range.labels,k.l,vals,dept.color,k.u);
-    });
+    var k = dept.kpis[0];
+    var vals = range.dkeys.map(dk=>getGSVal(dept.id,dk.y,dk.m+1,k.k));
+    CH[cid] = new Chart(el(cid),{type:'line', data:{labels:range.labels, datasets:[{label:k.l, data:vals, borderColor:dept.color, tension:0.3, fill:true, spanGaps:true}]}, options:getOpts()});
   }
 }
 
-function renderOverlayChart(col, cid, oc, range, fallbackColor){
-  var div=document.createElement('div'); div.className='cc';
+function renderOverlayChart(cid, dept, oc, containerId){
+  var range=buildRange(), div=document.createElement('div'); div.className='cc';
   div.innerHTML=`<div class="cc-t">${oc.title}</div><div class="cc-w tall"><canvas id="${cid}"></canvas></div>`;
-  col.appendChild(div);
-  var datasets=oc.datasets.map(ds=>{
-    var vals=range.dkeys.map(dk=>getGSVal(deptId,dk.y,dk.m,ds.key));
-    return {label:ds.label,data:vals,borderColor:ds.color,backgroundColor:ds.color+(ds.type==='bar'?'cc':'18'),type:ds.type,tension:0.3,fill:ds.type==='line',spanGaps:true};
-  });
-  CH[cid]=new Chart(el(cid),{data:{labels:range.labels,datasets:datasets},options:getChartOpts()});
+  el(containerId).appendChild(div);
+  var ds = oc.datasets.map(d=>({label:d.label, data:range.dkeys.map(dk=>getGSVal(dept.id,dk.y,dk.m+1,d.key)), borderColor:d.color, backgroundColor:d.color+'55', type:d.type, tension:0.3, fill:true, spanGaps:true}));
+  CH[cid] = new Chart(el(cid),{data:{labels:range.labels, datasets:ds}, options:getOpts()});
 }
 
-// FIX 1: Làm tròn số trên Chart (Ticks & Tooltips)
-function getChartOpts(unit){
-  return {
-    responsive:true,maintainAspectRatio:false,
-    plugins:{
-      legend:{display:true,labels:{boxWidth:10,font:{size:10}}},
-      tooltip:{
-        callbacks:{
-          label: (ctx) => {
-            let val = ctx.raw;
-            return ctx.dataset.label + ': ' + (val !== null ? val.toLocaleString(undefined,{minimumFractionDigits:0, maximumFractionDigits:1}) : 'N/A');
-          }
-        }
-      }
-    },
-    scales:{
-      y:{ticks:{font:{size:10}, callback:v=>v.toLocaleString(undefined,{maximumFractionDigits:1})}},
-      x:{ticks:{font:{size:10},maxRotation:45}}
-    }
+function renderSingleChart(cid, dept, k, containerId){
+  var range=buildRange(), div=document.createElement('div'); div.className='cc';
+  div.innerHTML=`<div class="cc-t">${k.l}</div><div class="cc-w"><canvas id="${cid}"></canvas></div>`;
+  el(containerId).appendChild(div);
+  var vals = range.dkeys.map(dk=>getGSVal(dept.id,dk.y,dk.m+1,k.k));
+  CH[cid] = new Chart(el(cid),{type:'line', data:{labels:range.labels, datasets:[{label:k.l, data:vals, borderColor:dept.color, tension:0.3, fill:true, spanGaps:true}]}, options:getOpts()});
+}
+
+function getOpts(){
+  return { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{boxWidth:12,font:{size:10}}}}, 
+    scales:{y:{ticks:{callback:v=>v.toLocaleString(undefined,{maximumFractionDigits:1})}}, x:{ticks:{font:{size:9}}}} 
   };
 }
 
-function mkLine(id,labels,label,data,color,unit){
-  return new Chart(el(id),{type:'line',data:{labels:labels,datasets:[{label:label,data:data,borderColor:color,backgroundColor:color+'18',fill:true,tension:0.3,spanGaps:true}]},options:getChartOpts(unit)});
+function buildRange(){
+  var labels=[], dkeys=[], cy=drF.y, cm=drF.m;
+  while(cy<drT.y || (cy===drT.y && cm<=drT.m)){ labels.push(MN[cm]+' '+cy); dkeys.push({y:cy,m:cm}); cm++; if(cm>11){cm=0;cy++;} }
+  return {labels, dkeys};
 }
 
-function buildRange(did){
-  var labels=[],dkeys=[],cy=drF.y,cm=drF.m;
-  while(cy<drT.y||(cy===drT.y&&cm<=drT.m)){
-    labels.push(MN[cm]+' '+cy); dkeys.push({y:cy,m:cm});
-    cm++;if(cm>11){cm=0;cy++;} if(labels.length>48)break;
-  }
-  return {labels,dkeys};
-}
-
-function killCharts(pfx){ Object.keys(CH).filter(k=>k.indexOf(pfx)===0).forEach(k=>{CH[k].destroy();delete CH[k];}); }
+function killCharts(pfx){ Object.keys(CH).forEach(k=>{ if(k.startsWith(pfx)){CH[k].destroy(); delete CH[k];} }); }
 function fmtV(v,k){ if(v==null)return'—'; if(k.t==='c')return '$'+v.toLocaleString(); return v.toLocaleString(undefined,{maximumFractionDigits:1})+(k.u==='%'?'%':''); }
 
-// EVENTS
-document.addEventListener('DOMContentLoaded',()=>{
-  el('btn-login').onclick=doLogin;
-  el('btn-logout').onclick=doLogout;
-  el('btn-back-overview').onclick=()=>renderBodRight(null);
-  el('lp-body').onclick=e=>{
-    var t=e.target, ah=t.closest('.acc-h');
-    if(ah){accOpen=accOpen===ah.dataset.dept?null:ah.dataset.dept;buildBodLeft();if(accOpen)renderBodRight(accOpen);return;}
-    if(t.classList.contains('vc-btn')){renderBodRight(t.dataset.dept);return;}
-    if(t.id==='dr-apply-d'){drF={m:parseInt(el('df-m').value),y:parseInt(el('df-y').value)};drT={m:parseInt(el('dt-m').value),y:parseInt(el('dt-y').value)};renderDeptRight();return;}
-    if(t.id==='dr-apply-b'){drF={m:parseInt(el('bdf-m').value),y:parseInt(el('bdf-y').value)};drT={m:parseInt(el('bdt-m').value),y:parseInt(el('bdt-y').value)};renderBodRight(accOpen);return;}
-  };
-  el('lp-body').onchange=e=>{ if(e.target.id==='s-m'||e.target.id==='s-y'){selM=parseInt(el('s-m').value);selY=parseInt(el('s-y').value);buildDeptLeft();} };
-});
+el('btn-login').onclick = doLogin;
+el('btn-logout').onclick = () => location.reload();
+el('btn-back-overview').onclick = () => { accOpen=null; renderBodRight(null); buildBodLeft(); };
 </script>
 </body>
 </html>
