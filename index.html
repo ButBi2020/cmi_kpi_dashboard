@@ -242,8 +242,8 @@ tbody tr:hover td{background:var(--sf2)}
 // ═══════════════════════════════════════════════
 // GOOGLE SHEETS CONFIG
 // ═══════════════════════════════════════════════
-var SHEET_ID  = '1erlvjOnrRT90VMnCkNnqOU-xORkYidNqwAyxcWBjsVk';
-var SHEET_GID = '0';
+var SHEET_ID  = '1DAJ4Yp8OiArf8Uvk21s5q-6tkxTjUm18xAWj6sxZuAE';
+var SHEET_GID = '312074521';
 var SHEET_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID
               + '/export?format=csv&gid=' + SHEET_GID;
 var SCRIPT_URL = ''; // optional: Google Apps Script URL for saving
@@ -260,7 +260,7 @@ var YRS = [2024, 2025, 2026, 2027];
 // DEPT DEFINITIONS
 // ═══════════════════════════════════════════════
 var DEPTS = [
-  {id:'PROD',  name:'Production',          color:'#378ADD', ini:'PR', mgr:'Rudy Knoesen',
+  {id:'PROD',  name:'Production',          color:'#378ADD', ini:'PR', mgr:'Prod Manager',
    purpose:'Deliver boats to plan, on time, with controlled labour.',
    kpis:[
      {k:'Plan_Boats',   l:'Plan Boats',    u:'count',t:'i'},
@@ -282,7 +282,7 @@ var DEPTS = [
        {key:'OnTime_pct', label:'On-Time %', color:'#F59E0B', type:'line'},
      ]},
    ]},
-  {id:'SALES', name:'Sales',               color:'#1D9E75', ini:'SA', mgr:'Mike',
+  {id:'SALES', name:'Sales',               color:'#1D9E75', ini:'SA', mgr:'Sales Manager',
    purpose:'Order intake quality and predictability.',
    kpis:[
      {k:'Orders_Booked_USD',l:'Orders Booked',u:'USD',t:'c'},
@@ -304,7 +304,7 @@ var DEPTS = [
        {key:'Pipeline_3mo_USD', label:'Pipeline', color:'#6EE7B7', type:'line'},
      ]},
    ]},
-  {id:'QA',    name:'Quality Assurance',   color:'#D4537E', ini:'QA', mgr:'Duy Anh',
+  {id:'QA',    name:'Quality Assurance',   color:'#D4537E', ini:'QA', mgr:'QA Manager',
    purpose:'Gatekeeper of first-time quality.',
    kpis:[
      {k:'FirstTimePass_pct',   l:'First Time Pass %',u:'%',t:'p'},
@@ -312,7 +312,7 @@ var DEPTS = [
      {k:'Warranty_Linked_pct', l:'Warranty Linked %',u:'%',t:'p'},
      {k:'Doc_Control_pct',     l:'Doc Control %',    u:'%',t:'p'},
    ]},
-  {id:'FIN',   name:'Finance',             color:'#EF9F27', ini:'FN', mgr:'Pham Nghia Dung',
+  {id:'FIN',   name:'Finance',             color:'#EF9F27', ini:'FN', mgr:'Finance Manager',
    purpose:'Cash, margin, and discipline.',
    kpis:[
      {k:'Revenue_USD',              l:'Revenue',          u:'USD',t:'c'},
@@ -338,7 +338,7 @@ var DEPTS = [
        {key:'AR_Over_90d_USD',  label:'AR >90d',      color:'#EF4444', type:'line'},
      ]},
    ]},
-  {id:'SCM',   name:'Supply Chain',        color:'#D85A30', ini:'SC', mgr:'Loc Dinh Thanh',
+  {id:'SC',   name:'Supply Chain',        color:'#D85A30', ini:'SC', mgr:'SC Manager',
    purpose:'Material availability without excess cash burn.',
    kpis:[
      {k:'OTIF_Customer_pct',   l:'OTIF Customer %',   u:'%',  t:'p'},
@@ -348,7 +348,7 @@ var DEPTS = [
      {k:'Inventory_Value_USD', l:'Inventory Value',   u:'USD',t:'c'},
      {k:'Slow_Moving_USD',     l:'Slow Moving Inv.',  u:'USD',t:'c'},
    ]},
-  {id:'HR',    name:'Human Resources',     color:'#7F77DD', ini:'HR', mgr:'Ms Chau',
+  {id:'HR',    name:'Human Resources',     color:'#7F77DD', ini:'HR', mgr:'HR Manager',
    purpose:'Stability and capability.',
    kpis:[
      {k:'Headcount',     l:'Headcount',     u:'ppl',t:'i'},
@@ -358,7 +358,7 @@ var DEPTS = [
      {k:'LTI_Count',     l:'LTI Count',     u:'cnt',t:'i'},
      {k:'Hours_Worked',  l:'Hours Worked',  u:'hrs',t:'i'},
    ]},
-  {id:'CS',    name:'Customer Service',    color:'#0891B2', ini:'CS', mgr:'Van Nguyen',
+  {id:'CS',    name:'Customer Service',    color:'#0891B2', ini:'CS', mgr:'CS Manager',
    purpose:'Warranty containment and customer confidence.',
    kpis:[
      {k:'Claims_Opened',    l:'Claims Opened',    u:'cnt', t:'i'},
@@ -379,7 +379,7 @@ var DEPTS = [
        {key:'Avg_Closure_Days', label:'Days', color:'#0E7490', type:'line'},
      ]},
    ]},
-  {id:'DESIGN',name:'Design & Technical',  color:'#8B5CF6', ini:'DT', mgr:'James',
+  {id:'DESIGN',name:'Design & Technical',  color:'#8B5CF6', ini:'DT', mgr:'TECH Manager',
    purpose:'Correct drawings, correct BOMs, minimal disruption.',
    kpis:[
      {k:'BOM_Accuracy_pct',                l:'BOM Accuracy %',   u:'%',t:'p'},
@@ -393,7 +393,7 @@ var DEPTS = [
      {k:'Cyber_Incidents',        l:'Cyber Incidents',u:'cnt',t:'i'},
      {k:'Tickets_Closed_SLA_pct', l:'Tickets SLA %',  u:'%', t:'p'},
    ]},
-  {id:'MKTG',  name:'Marketing',           color:'#EC4899', ini:'MK', mgr:'Nhi Pham',
+  {id:'MKTG',  name:'Marketing',           color:'#EC4899', ini:'MK', mgr:'Marketing Manager',
    purpose:'Lead generation efficiency.',
    kpis:[
      {k:'Engagement_Growth_pct', l:'Engagement Growth %',u:'%',  t:'p'},
@@ -415,7 +415,7 @@ var DEPTS = [
      {k:'Fire_OHS_Comp_pct',  l:'Fire/OHS Comp %',  u:'%',  t:'p'},
      {k:'Security_Incidents', l:'Security Incidents',u:'cnt',t:'i'},
    ]},
-  {id:'TL',    name:'TL Handover',         color:'#F97316', ini:'TL', mgr:'Phil Harper',
+  {id:'TL',    name:'TL Handover',         color:'#F97316', ini:'TL', mgr:'HandOver Manager',
    purpose:'Clean handover and brand experience.',
    kpis:[
      {k:'Comm_Hours_Planned',   l:'Comm Hrs Planned', u:'hrs',t:'i'},
@@ -450,21 +450,21 @@ var DEPTS = [
 ];
 
 var USERS = {
-  bod:        {role:'bod',                     name:'Managing Director',  ini:'',color:'#EF9F27',pass:'bod123'},
-  production:  {role:'dept',dept:'Dept PROD',  name:'Manager name',    ini:'',color:'#378ADD',pass:'production123'},
-  sales:       {role:'dept',dept:'Dept SALES', name:'Manager name',    ini:'',color:'#1D9E75',pass:'sales123'},
-  qa:          {role:'dept',dept:'Dept QA',    name:'Manager name',    ini:'',color:'#D4537E',pass:'qa123'},
-  finance:     {role:'dept',dept:'Dept FIN',   name:'Manager name',    ini:'',color:'#EF9F27',pass:'finance123'},
-  supply:      {role:'dept',dept:'Dept SCM',   name:'Manager name',    ini:'',color:'#D85A30',pass:'supply123'},
-  hr:          {role:'dept',dept:'Dept HR',    name:'Manager name',    ini:'',color:'#7F77DD',pass:'hr123'},
-  cs:          {role:'dept',dept:'Dept CS',    name:'Manager name',    ini:'',color:'#0891B2',pass:'cs123'},
-  design:      {role:'dept',dept:'Dept DESIGN',name:'Manager name',    ini:'',color:'#8B5CF6',pass:'design123'},
-  it:          {role:'dept',dept:'Dept IT',    name:'Manager name',    ini:'',color:'#475569',pass:'it123'},
-  marketing:   {role:'dept',dept:'Dept MKTG',  name:'Manager name',    ini:'',color:'#EC4899',pass:'marketing123'},
-  project_dev: {role:'dept',dept:'Dept PD',    name:'Manager name',    ini:'',color:'#14B8A6',pass:'project_dev123'},
-  property:    {role:'dept',dept:'Dept PROP',  name:'Manager name',    ini:'',color:'#84CC16',pass:'property123'},
-  tl_handover: {role:'dept',dept:'Dept TL',    name:'Manager name',    ini:'',color:'#F97316',pass:'tl_handover123'},
-  cid:         {role:'dept',dept:'Dept CID',   name:'Manager name',    ini:'',color:'#6366F1',pass:'cid123'},
+  bod:        {role:'bod', name:'BOD Name ',   								ini:'',color:'#EF9F27',pass:'bod123'},
+  production:  {role:'dept',dept:'PROD',  name:'Produciton Manager Name',    ini:'',color:'#378ADD',pass:'production123'},
+  sales:       {role:'dept',dept:'SALES', name:'Sales Manager Name',         ini:'',color:'#1D9E75',pass:'sales123'},
+  qa:          {role:'dept',dept:'QA',    name:'QA Manager Name',         	ini:'',color:'#D4537E',pass:'qa123'},
+  finance:     {role:'dept',dept:'FIN',   name:'Finance Manager Name', 		ini:'',color:'#EF9F27',pass:'finance123'},
+  sc:      		{role:'dept',dept:'SC',   name:'SC Manager Name',  			ini:'',color:'#D85A30',pass:'sc123'},
+  hr:          {role:'dept',dept:'HR',    name:'HR Manager Name',         	ini:'',color:'#7F77DD',pass:'hr123'},
+  cs:          {role:'dept',dept:'CS',    name:'CS Manager Name',      		ini:'',color:'#0891B2',pass:'cs123'},
+  design:      {role:'dept',dept:'DESIGN',name:'TECH Manager Name',           ini:'',color:'#8B5CF6',pass:'design123'},
+  it:          {role:'dept',dept:'IT',    name:'IT Manager Name',      		ini:'',color:'#475569',pass:'it123'},
+  marketing:   {role:'dept',dept:'MKTG',  name:'Marketing Manager Name',     ini:'',color:'#EC4899',pass:'marketing123'},
+  project_dev: {role:'dept',dept:'PD',    name:'Project Dev Lead Name',		ini:'',color:'#14B8A6',pass:'project_dev123'},
+  property:    {role:'dept',dept:'PROP',  name:'Property Manager Name',		ini:'',color:'#84CC16',pass:'property123'},
+  tl_handover: {role:'dept',dept:'TL',    name:'HandOver Manager Name',     ini:'',color:'#F97316',pass:'tl_handover123'},
+  cid:         {role:'dept',dept:'CID',   name:'CID Lead Name',        		ini:'',color:'#6366F1',pass:'cid123'},
 };
 
 // ═══════════════════════════════════════════════
