@@ -67,7 +67,6 @@ button{cursor:pointer}
 .ah-ch{font-size:9px;color:var(--hi);transition:transform .2s}.ah-ch.open{transform:rotate(90deg)}
 .acc-b{display:none;border-top:1px solid var(--bd);background:var(--sf2);padding:10px 11px}.acc-b.open{display:block}
 
-/* KPI ROWS IN SIDEBAR */
 .ks-row{display:flex;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--bd);gap:5px}
 .ks-l{font-size:11px;color:var(--mu);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ks-v{font-size:12px;font-weight:600}
@@ -189,19 +188,31 @@ function parseCSV(text) {
     if (inQ) { if (ch === '"' && text[i + 1] === '"') { field += '"'; i++; } else if (ch === '"') inQ = false; else field += ch; }
     else { if (ch === '"') inQ = true; else if (ch === ',') { cur.push(field); field = ''; } else if (ch === '\n' || (ch === '\r' && text[i + 1] === '\n')) { if (ch === '\r') i++; cur.push(field); field = ''; rows.push(cur); cur = []; } else field += ch; }
   }
-  if (field || cur.length) cur.push(field); rows.push(cur); return rows;
+  if (field || cur.length) cur.push(field); 
+  return rows.filter(r => r.length > 1 && r[0]); 
 }
 
 function fetchSheetData(cb){
   el('g-loader').classList.remove('hidden');
-  fetch(SHEET_URL+'&t='+Date.now()).then(r=>r.text()).then(csv=>{
-    var p = parseCSV(csv);
-    GS_HDR = p[0].map(h=>h.trim()); 
-    GS_DATA = p.slice(1).filter(r=>r[0]&&r[0].trim());
-    el('sync-badge').textContent = 'Live · ' + GS_DATA.length + ' rows'; 
-    el('sync-badge').className='sync-badge sync-ok';
-    el('g-loader').classList.add('hidden'); if(cb)cb();
-  }).catch(e => { alert("Error fetching data. Check your Sheet settings."); el('g-loader').classList.add('hidden'); });
+  fetch(SHEET_URL+'&t='+Date.now())
+    .then(r => r.text())
+    .then(csv => {
+      GS_DATA = parseCSV(csv);
+      if(GS_DATA.length > 0) {
+        GS_HDR = GS_DATA[0].map(h => h.trim());
+        GS_DATA = GS_DATA.slice(1);
+        el('sync-badge').textContent = 'Live · ' + GS_DATA.length + ' rows'; 
+        el('sync-badge').className='sync-badge sync-ok';
+      }
+      el('g-loader').classList.add('hidden'); 
+      if(cb)cb();
+    })
+    .catch(e => { 
+      el('g-loader').classList.add('hidden'); 
+      el('sync-badge').textContent = 'Offline'; 
+      el('sync-badge').className='sync-badge sync-err';
+      if(cb)cb(); 
+    });
 }
 
 function getLatestRecordInfo(did) {
@@ -218,6 +229,46 @@ function getGSVal(dept, y, m, k){
   return r && r[ki] ? parseFloat(r[ki]) : null;
 }
 
+function doLogin(){
+  var u=el('l-u').value.trim().toLowerCase(), p=el('l-p').value, acc=USERS[u];
+  if(!acc || acc.pass!==p) { 
+    el('l-err').textContent='Wrong username/password'; 
+    el('l-err').style.display='block'; 
+    return; 
+  }
+  U=acc; 
+  el('pg-login').style.display='none'; 
+  el('pg-app').style.display='flex';
+  el('t-av').textContent=U.ini; 
+  el('t-av').style.background=U.color+'25'; 
+  el('t-name').textContent=U.name;
+  
+  fetchSheetData(() => { 
+    if(U.role==='bod') { 
+      buildBodLeft(); 
+      renderBodRight(null); 
+    } else { 
+      deptId=U.dept; 
+      renderDeptView(); 
+    } 
+  });
+}
+
+function renderDeptView() {
+  var d = DEPTS.find(x => x.id === deptId);
+  el('rp-title').textContent = d.name;
+  el('rp-sub').textContent = 'Department Entry';
+  
+  var info = getLatestRecordInfo(deptId);
+  var html = `<div class="lsec">KPI Management</div><div class="dr-box">`;
+  html += `<p style="font-size:12px; margin-bottom:10px">Latest Update: <b>${info ? MN[info.m-1] + ' ' + info.y : 'None'}</b></p>`;
+  html += `</div><div class="charts-col" id="d-col"></div>`;
+  el('rp-body').innerHTML = html;
+  
+  if(d.overlayCharts) d.overlayCharts.forEach((oc,i) => renderOverlayChart(`d_oc_${i}`, d, oc, 'd-col'));
+  else d.kpis.forEach((k,i) => renderSingleChart(`d_${i}`, d, k, 'd-col'));
+}
+
 function buildBodLeft(){
   var html = `<div class="lsec">Chart Range</div><div class="dr-box">
     <div class="dr-row"><label>From</label><select class="drsel" id="bdf-m">${MN.map((m,i)=>`<option value="${i}" ${i===drF.m?'selected':''}>${m}</option>`).join('')}</select><select class="drsel" id="bdf-y">${[2024,2025,2026].map(y=>`<option value="${y}" ${y===drF.y?'selected':''}>${y}</option>`).join('')}</select></div>
@@ -227,12 +278,10 @@ function buildBodLeft(){
   DEPTS.forEach(d=>{
     var info = getLatestRecordInfo(d.id);
     var has = !!info, open = accOpen===d.id;
-    var lastMonthStr = has ? MN[info.m-1] + ' ' + info.y : 'No data';
-    
     html += `<div class="acc" id="acc-${d.id}">
       <div class="acc-h ${open?'open':''}" onclick="toggleAcc('${d.id}')">
         <span class="ah-dot" style="background:${d.color}"></span>
-        <span class="ah-name">${d.name} <span class="ah-last">${lastMonthStr}</span></span>
+        <span class="ah-name">${d.name} <span class="ah-last">${has ? MN[info.m-1] + ' ' + info.y : 'No data'}</span></span>
         <span class="ah-st ${has?'st-ok':'st-pend'}"></span>
         <span class="ah-ch ${open?'open':''}">▶</span>
       </div>
@@ -264,14 +313,6 @@ function buildAccBody(dept, info){
     </div>`;
   }).join('');
   return `<div>${rows}</div><button class="vc-btn" onclick="renderBodRight('${dept.id}')">View detailed charts →</button>`;
-}
-
-function doLogin(){
-  var u=el('l-u').value.trim().toLowerCase(), p=el('l-p').value, acc=USERS[u];
-  if(!acc || acc.pass!==p) { el('l-err').textContent='Wrong username/password'; el('l-err').style.display='block'; return; }
-  U=acc; el('pg-login').style.display='none'; el('pg-app').style.display='flex';
-  el('t-av').textContent=U.ini; el('t-av').style.background=U.color+'25'; el('t-name').textContent=U.name;
-  fetchSheetData(()=>{ if(U.role==='bod') { buildBodLeft(); renderBodRight(null); } else { deptId=U.dept; buildDeptLeft(); renderDeptRight(); } });
 }
 
 function toggleAcc(id){ accOpen = (accOpen === id ? null : id); buildBodLeft(); if(accOpen) renderBodRight(accOpen); }
