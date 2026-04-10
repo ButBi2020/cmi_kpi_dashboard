@@ -161,9 +161,9 @@ button{cursor:pointer}
 .rp-hdr-left{}
 .rp-title{font-size:17px;font-weight:700;margin-bottom:3px}
 .rp-sub{font-size:12px;color:var(--mu)}
-#btn-BOD-back{padding:6px 14px;border-radius:var(--r);border:1px solid var(--bd2);
+#btn-bod-back{padding:6px 14px;border-radius:var(--r);border:1px solid var(--bd2);
   background:var(--sf);color:var(--mu);font-size:12px;white-space:nowrap;margin-top:2px}
-#btn-BOD-back:hover{background:var(--sf2);color:var(--tx)}
+#btn-bod-back:hover{background:var(--sf2);color:var(--tx)}
 .charts-col{display:flex;flex-direction:column;gap:14px}
 .cc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:16px 18px}
 .cc-t{font-size:13px;font-weight:700;margin-bottom:2px}
@@ -201,8 +201,8 @@ tbody tr:hover td{background:var(--sf2)}
     <div id="l-err"></div>
     <button id="btn-login">Sign in</button>
     <div class="lhint">
-      <b>Accounts:</b> BOD · production · sales · qa · finance · supply · hr · cs · design · it · marketing · project_dev · property · tl_handover · cid<br>
-      Password: <b>[username]123</b> &nbsp;·&nbsp; e.g. BOD123, hr123
+      <b>Accounts:</b> bod · production · sales · qa · finance · supply · hr · cs · design · it · marketing · project_dev · property · tl_handover · cid<br>
+      Password: <b>[username]123</b> &nbsp;·&nbsp; e.g. bod123, hr123
     </div>
   </div>
 </div>
@@ -231,7 +231,7 @@ tbody tr:hover td{background:var(--sf2)}
           <div id="rp-title" class="rp-title">CMI Dashboard</div>
           <div id="rp-sub" class="rp-sub">Select a department from the left panel</div>
         </div>
-        <button id="btn-BOD-back" class="hidden">← Overview</button>
+        <button id="btn-bod-back" class="hidden">← Overview</button>
       </div>
       <div id="rp-body"></div>
     </div>
@@ -242,8 +242,8 @@ tbody tr:hover td{background:var(--sf2)}
 // ═══════════════════════════════════════════════
 // GOOGLE SHEETS CONFIG
 // ═══════════════════════════════════════════════
-var SHEET_ID  = '1erlvjOnrRT90VMnCkNnqOU-xORkYidNqwAyxcWBjsVk';
-var SHEET_GID = '0';
+var SHEET_ID  = '1DAJ4Yp8OiArf8Uvk21s5q-6tkxTjUm18xAWj6sxZuAE';
+var SHEET_GID = '312074521';
 var SHEET_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID
               + '/export?format=csv&gid=' + SHEET_GID;
 var SCRIPT_URL = ''; // optional: Google Apps Script URL for saving
@@ -254,7 +254,7 @@ var SCRIPT_URL = ''; // optional: Google Apps Script URL for saving
 var MN  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var NY  = new Date().getFullYear();
 var NM  = new Date().getMonth(); // 0-indexed: Jan=0 … Dec=11
-var YRS = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+var YRS = [2024, 2025, 2026, 2027];
 
 // ═══════════════════════════════════════════════
 // DEPT DEFINITIONS
@@ -450,7 +450,7 @@ var DEPTS = [
 ];
 
 var USERS = {
-  BOD:        {role:'BOD', name:'Managing Director',   ini:'MD',color:'#EF9F27',pass:'BOD123'},
+  bod:        {role:'bod', name:'Managing Director',   ini:'MD',color:'#EF9F27',pass:'bod123'},
   production:  {role:'dept',dept:'PROD',  name:'Rudy Knoesen',    ini:'RK',color:'#378ADD',pass:'production123'},
   sales:       {role:'dept',dept:'SALES', name:'Mike',            ini:'MS',color:'#1D9E75',pass:'sales123'},
   qa:          {role:'dept',dept:'QA',    name:'Duy Anh',         ini:'DA',color:'#D4537E',pass:'qa123'},
@@ -593,14 +593,14 @@ function doLogin(){
   var av=el('t-av');
   av.textContent=U.ini; av.style.background=U.color+'25'; av.style.color=U.color;
   // FIX #3a: dept badge — line below shows "HR" for HR user. Comment out to hide.
-  el('t-badge').textContent = U.role==='BOD' ? 'BOD' : U.dept;
-  el('t-badge').className   = 'tbadge '+(U.role==='BOD'?'tbm':'tba');
+  el('t-badge').textContent = U.role==='bod' ? 'BOD' : U.dept;
+  el('t-badge').className   = 'tbadge '+(U.role==='bod'?'tbm':'tba');
   // FIX #3b: full name — line below shows "Ms Chau" for HR user. Comment out to hide.
   el('t-name').textContent  = U.name;
   setSyncBadge('loading');
   fetchSheetData(function(){
-    if(U.role==='BOD'){
-      buildBODLeft(); renderBODRight(null);
+    if(U.role==='bod'){
+      buildbodLeft(); renderbodRight(null);
     } else {
       deptId=U.dept; selY=NY; selM=NM;
       buildDeptLeft(); renderDeptRight();
@@ -689,7 +689,7 @@ function applyDR(){
   if(tm&&ty){drT={m:parseInt(tm.value),y:parseInt(ty.value)};}
   if(bfm&&bfy){drF={m:parseInt(bfm.value),y:parseInt(bfy.value)};}
   if(btm&&bty){drT={m:parseInt(btm.value),y:parseInt(bty.value)};}
-  if(U&&U.role==='BOD') renderBODRight(accOpen);
+  if(U&&U.role==='bod') renderbodRight(accOpen);
   else renderDeptRight();
 }
 
@@ -750,7 +750,7 @@ function renderDeptRight(){
   var dept=DEPTS.find(function(d){return d.id===deptId;});
   el('rp-title').textContent=dept.name;
   el('rp-sub').textContent=dept.purpose;
-  el('btn-BOD-back').classList.add('hidden');
+  el('btn-bod-back').classList.add('hidden');
   var range=buildRange(deptId);
   killCharts('d_');
   el('rp-body').innerHTML='<div class="charts-col" id="d-col"></div>';
@@ -803,9 +803,9 @@ function renderOverlayChart(col, cid, oc, range, did){
 }
 
 // ═══════════════════════════════════════════════
-// BOD VIEW — LEFT PANEL
+// bod VIEW — LEFT PANEL
 // ═══════════════════════════════════════════════
-function buildBODLeft(){
+function buildbodLeft(){
   var drMO=function(sel){return MN.map(function(m,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+m+'</option>';}).join('');};
   var drYO=function(sel){return YRS.map(function(y){return '<option value="'+y+'"'+(y===sel?' selected':'')+'>'+y+'</option>';}).join('');};
   var html='<div class="lsec">Chart range</div>'
@@ -888,18 +888,18 @@ function toggleAcc(id){
     if(b)b.classList.toggle('open',open);
     if(c)c.classList.toggle('open',open);
   });
-  if(accOpen) renderBODRight(accOpen);
-  else        renderBODRight(null);
+  if(accOpen) renderbodRight(accOpen);
+  else        renderbodRight(null);
 }
-function BODViewDept(id){ accOpen=id; buildBODLeft(); renderBODRight(id); }
+function bodViewDept(id){ accOpen=id; buildbodLeft(); renderbodRight(id); }
 
 // ═══════════════════════════════════════════════
-// BOD VIEW — RIGHT PANEL
+// bod VIEW — RIGHT PANEL
 // ═══════════════════════════════════════════════
-function renderBODRight(id){
+function renderbodRight(id){
   killCharts('b_');
   var body=el('rp-body');
-  var backBtn=el('btn-BOD-back');
+  var backBtn=el('btn-bod-back');
 
   if(!id){
     // FIX #6: hide back button on overview
@@ -1046,15 +1046,15 @@ document.addEventListener('DOMContentLoaded',function(){
   el('l-u').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
 
   // FIX #6: back button wired here
-  el('btn-BOD-back').addEventListener('click',function(){
-    accOpen=null; buildBODLeft(); renderBODRight(null);
+  el('btn-bod-back').addEventListener('click',function(){
+    accOpen=null; buildbodLeft(); renderbodRight(null);
   });
 
   // FIX #2: sync badge click to refresh
   el('sync-badge').addEventListener('click',function(){
     if(!U)return;
     fetchSheetData(function(){
-      if(U.role==='BOD'){buildBODLeft();renderBODRight(accOpen);}
+      if(U.role==='bod'){buildbodLeft();renderbodRight(accOpen);}
       else{buildDeptLeft();renderDeptRight();}
     });
   });
@@ -1064,7 +1064,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var ah=t.closest('.acc-h');if(ah){toggleAcc(ah.dataset.dept);return;}
     if((t.classList.contains('vc-btn')||t.closest('.vc-btn'))&&(t.dataset.dept||t.closest('[data-dept]'))){
       var dept=(t.dataset.dept||t.closest('[data-dept]').dataset.dept);
-      BODViewDept(dept);return;
+      bodViewDept(dept);return;
     }
     if(t.closest('#sv-btn')){saveDept();return;}
     if(t.dataset.quick){setQ(t.dataset.quick);return;}
@@ -1076,8 +1076,8 @@ document.addEventListener('DOMContentLoaded',function(){
   el('rp-body').addEventListener('click',function(e){
     var t=e.target;
     var btn=t.closest('[data-dept]');
-    if(btn&&btn.classList.contains('vc-btn')){BODViewDept(btn.dataset.dept);return;}
-    if(t.classList.contains('vc-btn')&&t.dataset.dept){BODViewDept(t.dataset.dept);}
+    if(btn&&btn.classList.contains('vc-btn')){bodViewDept(btn.dataset.dept);return;}
+    if(t.classList.contains('vc-btn')&&t.dataset.dept){bodViewDept(t.dataset.dept);}
   });
 });
 </script>
