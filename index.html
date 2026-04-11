@@ -138,6 +138,30 @@ button{cursor:pointer}
 .ki-list{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
 .ki{display:flex;flex-direction:column;gap:3px}
 .ki label{font-size:11px;color:var(--mu);font-weight:600}
+/* delta row inside each KPI input */
+.ki-lbl-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.ki-lbl-row label{margin-bottom:0}
+.ki-delta{font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;white-space:nowrap}
+.ki-delta.du{background:var(--gn-bg);color:var(--gn)}
+.ki-delta.dd{background:var(--rd-bg);color:var(--rd)}
+.ki-delta.dn{color:var(--hi)}
+.ki-vs{font-weight:400;font-size:10px}
+/* Change password button */
+.chpw-btn{width:100%;padding:7px;border-radius:var(--r);border:1px solid var(--bd2);
+  background:transparent;color:var(--mu);font-size:12px;cursor:pointer;margin-top:2px;text-align:left}
+.chpw-btn:hover{background:var(--sf2);color:var(--tx)}
+/* Change password in-flow modal */
+.pw-modal{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);
+  padding:14px;margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.pw-modal label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.6px;color:var(--mu)}
+.pw-modal input{padding:7px 9px;border:1px solid var(--bd);border-radius:var(--r);
+  background:var(--sf);color:var(--tx);font-size:13px;width:100%}
+.pw-modal input:focus{outline:none;border-color:var(--bl)}
+.pw-save{width:100%;padding:7px;border:none;border-radius:var(--r);
+  background:var(--bl);color:#fff;font-size:12px;font-weight:600;cursor:pointer}
+.pw-save:hover{opacity:.88}
+.pw-msg{font-size:11px;text-align:center;margin-top:2px;display:none}
 .ki-in{padding:7px 9px;border:1px solid var(--bd);border-radius:var(--r);
   background:var(--sf);color:var(--tx);width:100%}
 .ki-in:focus{outline:none;border-color:var(--bl)}
@@ -254,7 +278,7 @@ var SCRIPT_URL = ''; // optional: Google Apps Script URL for saving
 var MN  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var NY  = new Date().getFullYear();
 var NM  = new Date().getMonth(); // 0-indexed: Jan=0 … Dec=11
-var YRS = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+var YRS = [2024, 2025, 2026, 2027];
 
 // ═══════════════════════════════════════════════
 // DEPT DEFINITIONS
@@ -450,21 +474,22 @@ var DEPTS = [
 ];
 
 var USERS = {
-  bod:        {role:'bod', name:'BOD Name ',   								ini:'',color:'#EF9F27',pass:'bod123'},
-  production:  {role:'dept',dept:'PROD',  name:'Produciton Manager Name',    ini:'',color:'#378ADD',pass:'production123'},
-  sales:       {role:'dept',dept:'SALES', name:'Sales Manager Name',         ini:'',color:'#1D9E75',pass:'sales123'},
-  qa:          {role:'dept',dept:'QA',    name:'QA Manager Name',         	ini:'',color:'#D4537E',pass:'qa123'},
-  finance:     {role:'dept',dept:'FIN',   name:'Finance Manager Name', 		ini:'',color:'#EF9F27',pass:'finance123'},
-  sc:      		{role:'dept',dept:'SC',   name:'SC Manager Name',  			ini:'',color:'#D85A30',pass:'sc123'},
-  hr:          {role:'dept',dept:'HR',    name:'HR Manager Name',         	ini:'',color:'#7F77DD',pass:'hr123'},
-  cs:          {role:'dept',dept:'CS',    name:'CS Manager Name',      		ini:'',color:'#0891B2',pass:'cs123'},
-  design:      {role:'dept',dept:'DESIGN',name:'TECH Manager Name',           ini:'',color:'#8B5CF6',pass:'design123'},
-  it:          {role:'dept',dept:'IT',    name:'IT Manager Name',      		ini:'',color:'#475569',pass:'it123'},
-  marketing:   {role:'dept',dept:'MKTG',  name:'Marketing Manager Name',     ini:'',color:'#EC4899',pass:'marketing123'},
-  project_dev: {role:'dept',dept:'PD',    name:'Project Dev Lead Name',		ini:'',color:'#14B8A6',pass:'project_dev123'},
-  property:    {role:'dept',dept:'PROP',  name:'Property Manager Name',		ini:'',color:'#84CC16',pass:'property123'},
-  tl_handover: {role:'dept',dept:'TL',    name:'HandOver Manager Name',     ini:'',color:'#F97316',pass:'tl_handover123'},
-  cid:         {role:'dept',dept:'CID',   name:'CID Lead Name',        		ini:'',color:'#6366F1',pass:'cid123'},
+  bod:         {role:'bod',  name:'BOD Name',                    ini:'',color:'#EF9F27',pass:'bod123'},
+  admin:       {role:'admin',name:'System Admin',                ini:'',color:'#374151',pass:'admin123'},
+  production:  {role:'dept', dept:'PROD',  name:'Produciton Manager Name', ini:'',color:'#378ADD',pass:'production123'},
+  sales:       {role:'dept', dept:'SALES', name:'Sales Manager Name',      ini:'',color:'#1D9E75',pass:'sales123'},
+  qa:          {role:'dept', dept:'QA',    name:'QA Manager Name',         ini:'',color:'#D4537E',pass:'qa123'},
+  finance:     {role:'dept', dept:'FIN',   name:'Finance Manager Name',    ini:'',color:'#EF9F27',pass:'finance123'},
+  sc:          {role:'dept', dept:'SC',    name:'SC Manager Name',         ini:'',color:'#D85A30',pass:'sc123'},
+  hr:          {role:'dept', dept:'HR',    name:'HR Manager Name',         ini:'',color:'#7F77DD',pass:'hr123'},
+  cs:          {role:'dept', dept:'CS',    name:'CS Manager Name',         ini:'',color:'#0891B2',pass:'cs123'},
+  design:      {role:'dept', dept:'DESIGN',name:'TECH Manager Name',       ini:'',color:'#8B5CF6',pass:'design123'},
+  it:          {role:'dept', dept:'IT',    name:'IT Manager Name',         ini:'',color:'#475569',pass:'it123'},
+  marketing:   {role:'dept', dept:'MKTG',  name:'Marketing Manager Name',  ini:'',color:'#EC4899',pass:'marketing123'},
+  project_dev: {role:'dept', dept:'PD',    name:'Project Dev Lead Name',   ini:'',color:'#14B8A6',pass:'project_dev123'},
+  property:    {role:'dept', dept:'PROP',  name:'Property Manager Name',   ini:'',color:'#84CC16',pass:'property123'},
+  tl_handover: {role:'dept', dept:'TL',    name:'HandOver Manager Name',   ini:'',color:'#F97316',pass:'tl_handover123'},
+  cid:         {role:'dept', dept:'CID',   name:'CID Lead Name',           ini:'',color:'#6366F1',pass:'cid123'},
 };
 
 // ═══════════════════════════════════════════════
@@ -576,37 +601,8 @@ function getLastDataMonth(deptId){
 // ═══════════════════════════════════════════════
 // LOGIN / LOGOUT
 // ═══════════════════════════════════════════════
-function doLogin(){
-  var u=el('l-u').value.trim().toLowerCase();
-  var p=el('l-p').value;
-  var acc=USERS[u];
-  var errEl=el('l-err');
-  if(!acc||acc.pass!==p){
-    errEl.textContent='Incorrect username or password.';
-    errEl.style.cssText='color:var(--rd);font-size:12px;margin-top:9px;padding:7px 10px;background:var(--rd-bg);border-radius:var(--r);display:block';
-    return;
-  }
-  errEl.style.display='none';
-  U=Object.assign({},acc,{username:u});
-  el('pg-login').style.display='none';
-  el('pg-app').style.display='flex';
-  var av=el('t-av');
-  av.textContent=U.ini; av.style.background=U.color+'25'; av.style.color=U.color;
-  // FIX #3a: dept badge — line below shows "HR" for HR user. Comment out to hide.
-  el('t-badge').textContent = U.role==='bod' ? 'BOD' : U.dept;
-  el('t-badge').className   = 'tbadge '+(U.role==='bod'?'tbm':'tba');
-  // FIX #3b: full name — line below shows "Ms Chau" for HR user. Comment out to hide.
-  el('t-name').textContent  = U.name;
-  setSyncBadge('loading');
-  fetchSheetData(function(){
-    if(U.role==='bod'){
-      buildbodLeft(); renderbodRight(null);
-    } else {
-      deptId=U.dept; selY=NY; selM=NM;
-      buildDeptLeft(); renderDeptRight();
-    }
-  });
-}
+// doLogin is defined later in the CHANGE PASSWORD section
+// (it needs getPass() to check localStorage passwords)
 
 function doLogout(){
   U=null; deptId=null; accOpen=null;
@@ -625,12 +621,24 @@ function buildDeptLeft(){
   var row=getGSRow(deptId,selY,selM);
   var saved=!!row;
   var comment=saved?getGSVal(deptId,selY,selM,'comment')||'':'';
+  // Previous month for delta indicators
+  var prevM0=selM===0?11:selM-1;
+  var prevY=selM===0?selY-1:selY;
+  var prevRow=getGSRow(deptId,prevY,prevM0);
   var mO=MN.map(function(m,i){return '<option value="'+i+'"'+(i===selM?' selected':'')+'>'+m+'</option>';}).join('');
   var yO=YRS.map(function(y){return '<option value="'+y+'"'+(y===selY?' selected':'')+'>'+y+'</option>';}).join('');
   var inputs=dept.kpis.map(function(k){
     var v=saved?getGSVal(deptId,selY,selM,k.k):null;
+    var pv=prevRow?getGSVal(deptId,prevY,prevM0,k.k):null;
+    var dlt='',dc='dn';
+    if(v!=null&&pv!=null&&pv!==0){
+      var p=((v-pv)/Math.abs(pv)*100);
+      dlt=(p>=0?'▲':'▼')+Math.abs(p).toFixed(1)+'%';
+      dc=p>=0?'du':'dd';
+    }
+    var deltaSpan=dlt?'<span class="ki-delta '+dc+'">'+dlt+'<span class="ki-vs"> vs '+MN[prevM0]+'</span></span>':'';
     return '<div class="ki">'
-      +'<label>'+k.l+' <span style="color:var(--hi);font-weight:400">('+k.u+')</span></label>'
+      +'<div class="ki-lbl-row"><label>'+k.l+' <span style="color:var(--hi);font-weight:400">('+k.u+')</span></label>'+deltaSpan+'</div>'
       +'<input class="ki-in" type="number" id="ki-'+k.k+'"'
       +' step="'+(k.t==='p'?'0.01':'1')+'"'
       +' value="'+(v!=null?v:'')+'" placeholder="—"></div>';
@@ -655,7 +663,7 @@ function buildDeptLeft(){
     +'<span class="spin" id="sv-sp"></span><span id="sv-lb">Save KPIs</span></button>'
     +'<div class="sv-ok" id="sv-ok">✓ Saved to Google Sheets</div>'
     +'<div class="sv-er" id="sv-er"></div>'
-    +'<div class="lsec" style="margin-top:18px">Chart range</div>'
+    +'<div class="lsec" style="margin-top:14px">Chart range</div>'
     +'<div class="dr-box"><div class="dr-quick">'
     +'<button class="drq" data-quick="ytd">YTD</button>'
     +'<button class="drq" data-quick="12m">Last 12M</button>'
@@ -666,7 +674,10 @@ function buildDeptLeft(){
     +'<div class="dr-row"><label>To</label>'
     +'<select class="drsel" id="dt-m">'+drMO(drT.m)+'</select>'
     +'<select class="drsel" id="dt-y">'+drYO(drT.y)+'</select></div>'
-    +'<button class="dr-apply" id="dr-apply-d">Apply</button></div>';
+    +'<button class="dr-apply" id="dr-apply-d">Apply</button></div>'
+    +'<div class="lsec" style="margin-top:14px">Account</div>'
+    +'<button class="chpw-btn" id="btn-chpw">🔑 Change password</button>'
+    +'<div id="chpw-wrap"></div>';
 }
 
 function onPC(){
@@ -849,16 +860,35 @@ function buildbodLeft(){
       +'</div>';
   });
   el('lp-body').innerHTML=html;
+  // Admin: append user management panel below depts
+  if(U&&U.role==='admin'){
+    el('lp-body').innerHTML+=
+      '<div class="lsec" style="margin-top:14px">Admin</div>'
+      +'<div style="background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:10px 11px">'+buildAdminPanel()+'</div>';
+  }
+  // BOD + Admin: change password button at bottom
+  el('lp-body').innerHTML+=
+    '<div class="lsec" style="margin-top:14px">Account</div>'
+    +'<button class="chpw-btn" id="btn-chpw">🔑 Change password</button>'
+    +'<div id="chpw-wrap"></div>';
 }
 
 function buildAccBody(dept){
-  var row=getGSRow(dept.id,NY,NM);
-  var prevRow=NM>0?getGSRow(dept.id,NY,NM-1):null;
-  if(!row) return '<div style="font-size:12px;color:var(--hi);padding:4px 0">No data for '+MN[NM]+' '+NY+'.</div>'
-    +'<button class="vc-btn" data-dept="'+dept.id+'">View all charts →</button>';
+  // Use latest available data month, not current calendar month
+  var lastDM=getLastDataMonth(dept.id);
+  if(!lastDM){
+    return '<div style="font-size:12px;color:var(--hi);padding:4px 0">No data available yet.</div>'
+      +'<button class="vc-btn" data-dept="'+dept.id+'">View all charts →</button>';
+  }
+  var curM0=lastDM.m-1; // convert to 0-indexed
+  var curY=lastDM.y;
+  var prevM0=curM0===0?11:curM0-1;
+  var prevY=curM0===0?curY-1:curY;
+  var row=getGSRow(dept.id,curY,curM0);
+  var prevRow=getGSRow(dept.id,prevY,prevM0);
   var rows=dept.kpis.map(function(k){
-    var v=getGSVal(dept.id,NY,NM,k.k);
-    var pv=prevRow?getGSVal(dept.id,NY,NM-1,k.k):null;
+    var v=getGSVal(dept.id,curY,curM0,k.k);
+    var pv=prevRow?getGSVal(dept.id,prevY,prevM0,k.k):null;
     var dlt='',dc='dn';
     if(v!=null&&pv!=null&&pv!==0){
       var p=((v-pv)/Math.abs(pv)*100);
@@ -871,8 +901,9 @@ function buildAccBody(dept){
       +(dlt?'<span class="ks-d '+dc+'">'+dlt+'</span>':'')
       +'</div>';
   }).join('');
-  var cmt=row?getGSVal(dept.id,NY,NM,'comment')||'':'';
-  return '<div>'+rows+'</div>'
+  var cmt=row?getGSVal(dept.id,curY,curM0,'comment')||'':'';
+  return '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--hi);margin-bottom:6px">Snapshot — '+MN[curM0]+' '+curY+'</div>'
+    +'<div>'+rows+'</div>'
     +(cmt?'<div class="ks-cmt">'+cmt+'</div>':'')
     +'<button class="vc-btn" data-dept="'+dept.id+'">View all charts →</button>';
 }
@@ -1037,6 +1068,118 @@ function mkLine(id,labels,label,data,color,unit){
 }
 
 // ═══════════════════════════════════════════════
+// CHANGE PASSWORD
+// Passwords are stored in localStorage so they
+// persist across sessions on the same browser.
+// Key: cmi_pw_[username]
+// ═══════════════════════════════════════════════
+function getPass(username){
+  // Check localStorage first, fall back to USERS default
+  try{
+    var stored=localStorage.getItem('cmi_pw_'+username);
+    return stored||USERS[username].pass;
+  }catch(e){ return USERS[username].pass; }
+}
+
+function doLogin(){
+  var u=el('l-u').value.trim().toLowerCase();
+  var p=el('l-p').value;
+  var acc=USERS[u];
+  var errEl=el('l-err');
+  if(!acc){
+    errEl.textContent='Unknown username.';
+    errEl.style.cssText='color:var(--rd);font-size:12px;margin-top:9px;padding:7px 10px;background:var(--rd-bg);border-radius:var(--r);display:block';
+    return;
+  }
+  // Check against stored password (or default)
+  if(getPass(u)!==p){
+    errEl.textContent='Incorrect password.';
+    errEl.style.cssText='color:var(--rd);font-size:12px;margin-top:9px;padding:7px 10px;background:var(--rd-bg);border-radius:var(--r);display:block';
+    return;
+  }
+  errEl.style.display='none';
+  U=Object.assign({},acc,{username:u});
+  el('pg-login').style.display='none';
+  el('pg-app').style.display='flex';
+  var av=el('t-av');
+  av.textContent=U.ini?U.ini:U.name.trim().charAt(0).toUpperCase();
+  av.style.background=U.color+'25'; av.style.color=U.color;
+  el('t-badge').textContent=(U.role==='bod')?'BOD':(U.role==='admin'?'ADMIN':U.dept);
+  el('t-badge').className='tbadge '+(U.role==='dept'?'tba':'tbm');
+  el('t-name').textContent=U.name;
+  setSyncBadge('loading');
+  fetchSheetData(function(){
+    if(U.role==='bod'||U.role==='admin'){
+      buildbodLeft(); renderbodRight(null);
+    } else {
+      deptId=U.dept; selY=NY; selM=NM;
+      buildDeptLeft(); renderDeptRight();
+    }
+  });
+}
+
+function showChangePw(){
+  var wrap=el('chpw-wrap');
+  if(!wrap)return;
+  // Toggle: if already open, close it
+  if(wrap.innerHTML.trim()){wrap.innerHTML='';return;}
+  wrap.innerHTML=
+    '<div class="pw-modal">'
+    +'<label>Current password</label>'
+    +'<input type="password" id="pw-cur" placeholder="Current password">'
+    +'<label>New password</label>'
+    +'<input type="password" id="pw-new" placeholder="At least 6 characters">'
+    +'<label>Confirm new password</label>'
+    +'<input type="password" id="pw-cfm" placeholder="Repeat new password">'
+    +'<button class="pw-save" id="pw-save-btn">Save new password</button>'
+    +'<div class="pw-msg" id="pw-msg"></div>'
+    +'</div>';
+  el('pw-save-btn').addEventListener('click',function(){
+    var cur=el('pw-cur').value;
+    var nw=el('pw-new').value;
+    var cfm=el('pw-cfm').value;
+    var msg=el('pw-msg');
+    if(cur!==getPass(U.username)){
+      msg.textContent='Current password is incorrect.';
+      msg.style.cssText='font-size:11px;text-align:center;display:block;color:var(--rd)';return;
+    }
+    if(nw.length<6){
+      msg.textContent='New password must be at least 6 characters.';
+      msg.style.cssText='font-size:11px;text-align:center;display:block;color:var(--rd)';return;
+    }
+    if(nw!==cfm){
+      msg.textContent='Passwords do not match.';
+      msg.style.cssText='font-size:11px;text-align:center;display:block;color:var(--rd)';return;
+    }
+    try{ localStorage.setItem('cmi_pw_'+U.username, nw); }catch(e){}
+    msg.textContent='✓ Password changed successfully.';
+    msg.style.cssText='font-size:11px;text-align:center;display:block;color:var(--gn)';
+    setTimeout(function(){wrap.innerHTML='';},2000);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// ADMIN — user management panel in BOD sidebar
+// ═══════════════════════════════════════════════
+function buildAdminPanel(){
+  var rows=Object.entries(USERS).map(function(entry){
+    var uname=entry[0], acc=entry[1];
+    var roleLabel=acc.role==='bod'?'BOD':acc.role==='admin'?'Admin':(acc.dept||acc.role);
+    var hasCusPw=false;
+    try{hasCusPw=!!localStorage.getItem('cmi_pw_'+uname);}catch(e){}
+    return '<div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--bd)">'
+      +'<span style="width:7px;height:7px;border-radius:50%;background:'+acc.color+';flex-shrink:0"></span>'
+      +'<span style="flex:1;font-size:12px;font-weight:500">'+uname+'</span>'
+      +'<span style="font-size:10px;color:var(--mu)">'+roleLabel+'</span>'
+      +(hasCusPw?'<span title="Custom password set" style="font-size:10px;color:var(--am)">🔑</span>':'')
+      +'</div>';
+  }).join('');
+  return '<div style="font-size:10px;color:var(--hi);margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:.7px">User accounts</div>'
+    +rows
+    +'<div style="font-size:10px;color:var(--hi);margin-top:8px;line-height:1.5">🔑 = custom password set<br>Passwords stored in browser localStorage.</div>';
+}
+
+// ═══════════════════════════════════════════════
 // EVENT DELEGATION — zero inline handlers
 // ═══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',function(){
@@ -1050,11 +1193,11 @@ document.addEventListener('DOMContentLoaded',function(){
     accOpen=null; buildbodLeft(); renderbodRight(null);
   });
 
-  // FIX #2: sync badge click to refresh
+  // sync badge click to refresh
   el('sync-badge').addEventListener('click',function(){
     if(!U)return;
     fetchSheetData(function(){
-      if(U.role==='bod'){buildbodLeft();renderbodRight(accOpen);}
+      if(U.role==='bod'||U.role==='admin'){buildbodLeft();renderbodRight(accOpen);}
       else{buildDeptLeft();renderDeptRight();}
     });
   });
@@ -1067,6 +1210,7 @@ document.addEventListener('DOMContentLoaded',function(){
       bodViewDept(dept);return;
     }
     if(t.closest('#sv-btn')){saveDept();return;}
+    if(t.id==='btn-chpw'||t.closest('#btn-chpw')){showChangePw();return;}
     if(t.dataset.quick){setQ(t.dataset.quick);return;}
     if(t.id==='dr-apply-d'||t.id==='dr-apply-b'){applyDR();return;}
   });
