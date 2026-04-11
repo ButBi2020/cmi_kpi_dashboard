@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CMI · KPI Dashboard</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -209,6 +210,43 @@ thead th{padding:8px 14px;text-align:left;font-size:10px;font-weight:700;color:v
 tbody td{padding:9px 14px;font-size:12px;border-bottom:1px solid var(--bd)}
 tbody tr:last-child td{border-bottom:none}
 tbody tr:hover td{background:var(--sf2)}
+
+/* LOCK/REVISION */
+.rev-badge{display:inline-flex;align-items:center;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:600;background:var(--bl-bg);color:var(--bl);margin-left:4px}
+.lock-bar{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--gn-bg);border:1px solid var(--gn);border-radius:var(--r);margin-bottom:10px;font-size:12px;color:var(--gn);font-weight:600}
+.edit-btn{padding:4px 10px;border-radius:var(--r);border:1px solid var(--gn);background:var(--sf);color:var(--gn);font-size:11px;font-weight:600;cursor:pointer}
+.edit-btn:hover{background:var(--gn);color:#fff}
+/* MESSAGING */
+.msg-panel{position:fixed;right:0;top:var(--th);bottom:0;width:320px;background:var(--sf);border-left:1px solid var(--bd);display:flex;flex-direction:column;z-index:90;transform:translateX(100%);transition:transform .25s ease}
+.msg-panel.open{transform:translateX(0)}
+.msg-hdr{padding:12px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.msg-hdr-title{font-weight:600;font-size:13px}
+.msg-close-btn{border:none;background:none;font-size:16px;color:var(--mu);cursor:pointer;padding:2px 6px}
+.msg-close-btn:hover{color:var(--tx)}
+.msg-thread{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.msg-bubble{max-width:85%;padding:8px 11px;border-radius:10px;font-size:12px;line-height:1.5;word-break:break-word}
+.msg-from-me{align-self:flex-end;background:var(--bl);color:#fff;border-radius:10px 10px 2px 10px}
+.msg-from-other{align-self:flex-start;background:var(--sf2);color:var(--tx);border-radius:10px 10px 10px 2px;border:1px solid var(--bd)}
+.msg-meta{font-size:10px;opacity:.65;margin-top:3px}
+.msg-compose{padding:10px 14px;border-top:1px solid var(--bd);display:flex;gap:7px}
+.msg-txt-input{flex:1;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--r);font-size:12px;resize:none;font-family:inherit;background:var(--sf)}
+.msg-txt-input:focus{outline:none;border-color:var(--bl)}
+.msg-send-btn2{padding:7px 12px;border:none;border-radius:var(--r);background:var(--bl);color:#fff;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-end}
+.msg-send-btn2:hover{opacity:.88}
+.msg-action-btn{padding:5px 11px;border-radius:var(--r);border:1px solid var(--bd2);background:var(--sf);color:var(--mu);font-size:11px;cursor:pointer;margin-left:5px}
+.msg-action-btn:hover{background:var(--sf2);color:var(--tx)}
+.unread-dot{width:7px;height:7px;border-radius:50%;background:var(--rd);display:inline-block;margin-left:4px;vertical-align:middle}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:flex;align-items:center;justify-content:center}
+.modal-box{background:var(--sf);border-radius:var(--rl);width:560px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-head{padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;font-weight:600;font-size:14px}
+.modal-body{flex:1;overflow-y:auto;padding:14px 18px}
+.modal-close-x{border:none;background:none;font-size:18px;color:var(--mu);cursor:pointer}
+.modal-close-x:hover{color:var(--tx)}
+.hist-item{padding:9px 0;border-bottom:1px solid var(--bd)}
+.hist-item:last-child{border-bottom:none}
+.hist-meta{font-size:10px;color:var(--hi);margin-bottom:2px}
+.hist-text{font-size:12px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -255,11 +293,32 @@ tbody tr:hover td{background:var(--sf2)}
           <div id="rp-title" class="rp-title">CMI Dashboard</div>
           <div id="rp-sub" class="rp-sub">Select a department from the left panel</div>
         </div>
-        <button id="btn-bod-back" class="hidden">← Overview</button>
+        <div style="display:flex;align-items:center;gap:6px"><div id="rp-msg-btn-wrap"></div><button class="msg-action-btn" id="rp-hist-btn">&#x1F4CB; History</button><button id="btn-bod-back" class="hidden">← Overview</button></div>
       </div>
       <div id="rp-body"></div>
     </div>
+  
+  <div class="msg-panel" id="msg-panel">
+    <div class="msg-hdr">
+      <div class="msg-hdr-title" id="msg-panel-title">Messages</div>
+      <button class="msg-close-btn" id="msg-panel-close-btn">&#x2715;</button>
+    </div>
+    <div class="msg-thread" id="msg-thread"></div>
+    <div class="msg-compose">
+      <textarea class="msg-txt-input" id="msg-txt-input" rows="2" placeholder="Type a message…"></textarea>
+      <button class="msg-send-btn2" id="msg-send-btn">Send</button>
+    </div>
   </div>
+  <div id="modal-overlay" style="display:none" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span id="modal-title">Message History</span>
+        <button class="modal-close-x" id="modal-close-x">&#x2715;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+</div>
 </div>
 
 <script>
@@ -500,7 +559,9 @@ var U = null, deptId = null, selY = NY, selM = NM;
 var drF = {y:NY-1, m:0}, drT = {y:NY, m:NM};
 var accOpen = null;
 var CH = {};
+var UNLOCKED = {};
 
+Chart.register(ChartDataLabels);
 function el(id){ return document.getElementById(id); }
 
 // ═══════════════════════════════════════════════
@@ -562,13 +623,26 @@ function setSyncBadge(state, count){
 //         Fix: sheet_month - 1 === code_month
 // ═══════════════════════════════════════════════
 function getGSRow(dept, year, month_0idx){
+  // Returns LAST (latest revision) row for dept/year/month
+  var found=null;
   for(var i=0;i<GS_DATA.length;i++){
     var r=GS_DATA[i];
-    // r[1] is sheet month (1=Jan…12=Dec); month_0idx is 0=Jan…11=Dec
-    if(r[0]===dept && (parseInt(r[1])-1)===month_0idx && parseInt(r[2])===year)
-      return r;
+    if(r[0]===dept&&(parseInt(r[1])-1)===month_0idx&&parseInt(r[2])===year)
+      found=r;
   }
-  return null;
+  return found;
+}
+function getRevisionCount(dept,year,m0){
+  var n=0;
+  for(var i=0;i<GS_DATA.length;i++){
+    var r=GS_DATA[i];
+    if(r[0]===dept&&(parseInt(r[1])-1)===m0&&parseInt(r[2])===year)n++;
+  }
+  return n;
+}
+function ordinal(n){
+  var s=['th','st','nd','rd'],v=n%100;
+  return n+(s[(v-20)%10]||s[v]||s[0]);
 }
 
 function getGSVal(dept, year, month_0idx, key){
@@ -627,6 +701,8 @@ function buildDeptLeft(){
   var prevRow=getGSRow(deptId,prevY,prevM0);
   var mO=MN.map(function(m,i){return '<option value="'+i+'"'+(i===selM?' selected':'')+'>'+m+'</option>';}).join('');
   var yO=YRS.map(function(y){return '<option value="'+y+'"'+(y===selY?' selected':'')+'>'+y+'</option>';}).join('');
+  var revCount=getRevisionCount(deptId,selY,selM);
+  var isLocked=saved&&!UNLOCKED[deptId+'_'+selY+'_'+selM];
   var inputs=dept.kpis.map(function(k){
     var v=saved?getGSVal(deptId,selY,selM,k.k):null;
     var pv=prevRow?getGSVal(deptId,prevY,prevM0,k.k):null;
@@ -636,12 +712,15 @@ function buildDeptLeft(){
       dlt=(p>=0?'▲':'▼')+Math.abs(p).toFixed(1)+'%';
       dc=p>=0?'du':'dd';
     }
+    var revSpan=revCount>1?'<span class="rev-badge">'+ordinal(revCount)+'</span>':'';
     var deltaSpan=dlt?'<span class="ki-delta '+dc+'">'+dlt+'<span class="ki-vs"> vs '+MN[prevM0]+'</span></span>':'';
     return '<div class="ki">'
-      +'<div class="ki-lbl-row"><label>'+k.l+' <span style="color:var(--hi);font-weight:400">('+k.u+')</span></label>'+deltaSpan+'</div>'
+      +'<div class="ki-lbl-row"><label>'+k.l+' <span style="color:var(--hi);font-weight:400">('+k.u+')</span></label>'
+      +'<span style="display:flex;align-items:center;gap:3px">'+revSpan+deltaSpan+'</span></div>'
       +'<input class="ki-in" type="number" id="ki-'+k.k+'"'
       +' step="'+(k.t==='p'?'0.01':'1')+'"'
-      +' value="'+(v!=null?v:'')+'" placeholder="—"></div>';
+      +' value="'+(v!=null?v:'')+'" placeholder="—"'
+      +(isLocked?' readonly style="background:var(--sf2);color:var(--mu)"':'')+'></div>';
   }).join('');
   var drMO=function(sel){return MN.map(function(m,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+m+'</option>';}).join('');};
   var drYO=function(sel){return YRS.map(function(y){return '<option value="'+y+'"'+(y===sel?' selected':'')+'>'+y+'</option>';}).join('');};
@@ -659,8 +738,10 @@ function buildDeptLeft(){
     +'<div class="ki" style="margin-bottom:13px">'
     +'<label>Comment</label>'
     +'<textarea class="ki-ta" id="ki-cmt" placeholder="Notes…">'+comment+'</textarea></div>'
-    +'<button class="sv-btn" id="sv-btn">'
-    +'<span class="spin" id="sv-sp"></span><span id="sv-lb">Save KPIs</span></button>'
+    +(isLocked
+        ?'<div class="lock-bar">🔒 Submitted — locked <button class="edit-btn" id="btn-unlock">✏️ Edit &amp; revise</button></div>'
+        :'<button class="sv-btn" id="sv-btn"><span class="spin" id="sv-sp"></span><span id="sv-lb">Save KPIs</span></button>'
+     )
     +'<div class="sv-ok" id="sv-ok">✓ Saved to Google Sheets</div>'
     +'<div class="sv-er" id="sv-er"></div>'
     +'<div class="lsec" style="margin-top:14px">Chart range</div>'
@@ -726,16 +807,12 @@ function saveDept(){
       if(h==='submitted_by')return U.username;
       return payload[h]!=null?String(payload[h]):'';
     });
-    var found=false;
-    for(var i=0;i<GS_DATA.length;i++){
-      if(GS_DATA[i][0]===deptId&&(parseInt(GS_DATA[i][1])-1)===selM&&parseInt(GS_DATA[i][2])===selY){
-        GS_DATA[i]=newRow;found=true;break;
-      }
-    }
-    if(!found)GS_DATA.push(newRow);
+    GS_DATA.push(newRow); // always append = new revision
+    delete UNLOCKED[deptId+'_'+selY+'_'+selM];
     sp.style.display='none'; lb.textContent='Save KPIs';
     ok.style.display='block';
     var badge=el('st-badge');if(badge){badge.textContent='Submitted';badge.className='badge bg';}
+    buildDeptLeft();
     renderDeptRight();
     setTimeout(function(){ok.style.display='none';},3000);
     return;
@@ -762,6 +839,8 @@ function renderDeptRight(){
   el('rp-title').textContent=dept.name;
   el('rp-sub').textContent=dept.purpose;
   el('btn-bod-back').classList.add('hidden');
+  var mw=el('rp-msg-btn-wrap');
+  if(mw){var ud=getDeptUnreadBadge(deptId);mw.innerHTML='<button class="msg-action-btn" id="rp-open-msg" data-dept="'+deptId+'">&#x1F4AC; Messages'+ud+'</button>';}
   var range=buildRange(deptId);
   killCharts('d_');
   el('rp-body').innerHTML='<div class="charts-col" id="d-col"></div>';
@@ -796,20 +875,46 @@ function renderOverlayChart(col, cid, oc, range, did){
     +legendHtml
     +'<div class="cc-w'+(isMulti?' tall':'')+'"><canvas id="'+cid+'"></canvas></div>';
   col.appendChild(div);
+  var many=range.labels.length>24;
+  var isTwoBar=oc.datasets.length===2&&oc.datasets[0].type==='bar'&&oc.datasets[1].type==='bar';
   var datasets=oc.datasets.map(function(ds){
     var vals=range.dkeys.map(function(dk){return getGSVal(did,dk.y,dk.m,ds.key);});
     var base={label:ds.label,data:vals,borderColor:ds.color,
-      backgroundColor:ds.color+(ds.type==='bar'?'cc':'18'),
+      backgroundColor:ds.color+(ds.type==='bar'?'bb':'18'),
       tension:.3,fill:ds.type!=='bar',
-      pointRadius:range.labels.length>24?2:4,
-      pointBackgroundColor:ds.color,spanGaps:true};
+      pointRadius:many?2:4,
+      pointBackgroundColor:ds.color,spanGaps:true,yAxisID:'y'};
     if(ds.type==='bar'){base.type='bar';base.borderRadius=3;base.borderWidth=1;}
     return base;
   });
+  if(isTwoBar){
+    var va=range.dkeys.map(function(dk){return getGSVal(did,dk.y,dk.m,oc.datasets[0].key);});
+    var vb=range.dkeys.map(function(dk){return getGSVal(did,dk.y,dk.m,oc.datasets[1].key);});
+    var rv=va.map(function(a,i){return a&&vb[i]?Math.round(vb[i]/a*1000)/10:null;});
+    datasets.push({type:'line',label:'Ratio %',data:rv,
+      borderColor:'#6366F1',backgroundColor:'transparent',
+      tension:.3,fill:false,pointRadius:many?2:3,
+      pointBackgroundColor:'#6366F1',spanGaps:true,yAxisID:'y2',borderDash:[4,3]});
+    var lw=div.querySelector('.legend');
+    if(lw)lw.innerHTML+='<div class="legend-item"><span class="legend-dot" style="background:#6366F1;border-radius:50%"></span>Ratio %</div>';
+  }
+  var opts=chartOpts(oc.unit||'');
+  if(isTwoBar){opts.scales.y2={type:'linear',position:'right',
+    grid:{drawOnChartArea:false},
+    ticks:{font:{size:10},callback:function(v){return v+'%';}}};}
+  opts.plugins.datalabels={
+    display:function(ctx){return ctx.dataset.type==='bar'&&!many;},
+    color:'#333',anchor:'end',align:'top',font:{size:9,weight:'600'},
+    formatter:function(v){
+      if(v==null)return null;
+      if(oc.unit==='USD')return v>=1e6?(Math.round(v/1e5)/10)+'M':v>=1000?Math.round(v/1000)+'k':'';
+      return Math.round(v);
+    }
+  };
   CH[cid]=new Chart(document.getElementById(cid),{
-    type:oc.datasets[0].type==='bar'?'bar':'line',
+    type:'bar',
     data:{labels:range.labels,datasets:datasets},
-    options:chartOpts(oc.unit||'')
+    options:opts,plugins:[ChartDataLabels]
   });
 }
 
@@ -975,6 +1080,8 @@ function renderbodRight(id){
 
   // FIX #6: show back button when viewing a specific dept
   if(backBtn) backBtn.classList.remove('hidden');
+  var mw2=el('rp-msg-btn-wrap');
+  if(mw2){mw2.innerHTML='<button class="msg-action-btn" id="rp-open-msg" data-dept="'+id+'">&#x1F4AC; Message</button>';}
   var dept=DEPTS.find(function(d){return d.id===id;});
   el('rp-title').textContent=dept.name;
   el('rp-sub').textContent=dept.purpose;
@@ -1055,17 +1162,96 @@ function chartOpts(unit){
   };
 }
 
-// FIX #1: mkLine uses chartOpts for consistent rounding
 function mkLine(id,labels,label,data,color,unit){
   var many=labels.length>24;
+  var opts=chartOpts(unit);
+  opts.plugins.datalabels={
+    display:!many,color:color,anchor:'end',align:'top',
+    font:{size:9,weight:'600'},
+    formatter:function(v){
+      if(v==null)return null;
+      if(unit==='%')return(Math.round(v*10)/10)+'%';
+      if(unit==='USD')return v>=1e6?(Math.round(v/1e5)/10)+'M':v>=1000?Math.round(v/1000)+'k':'';
+      return Math.round(v);
+    }
+  };
   return new Chart(document.getElementById(id),{
     type:'line',
     data:{labels:labels,datasets:[{label:label,data:data,
       borderColor:color,backgroundColor:color+'14',tension:.3,fill:true,
       pointRadius:many?2:4,pointBackgroundColor:color,spanGaps:true}]},
-    options:chartOpts(unit)
+    options:opts,plugins:[ChartDataLabels]
   });
 }
+
+
+// ═══════════════════════════════════════════════
+// MESSAGING — BOD <-> Dept 2-way communication
+// ═══════════════════════════════════════════════
+var msgDeptTarget=null;
+function getMsgs(){try{var r=localStorage.getItem('cmi_msgs');return r?JSON.parse(r):[];}catch(e){return[];}}
+function saveMsgsLocal(m){try{localStorage.setItem('cmi_msgs',JSON.stringify(m));}catch(e){}}
+function getUnreadCount(deptId){
+  var msgs=getMsgs();var me=U?U.username:'';
+  return msgs.filter(function(m){
+    var mine=(U&&U.role==='dept'&&m.dept===deptId&&m.fromRole!=='dept')
+            ||(U&&(U.role==='bod'||U.role==='admin')&&m.dept===deptId&&m.fromRole==='dept');
+    return mine&&(!m.read||m.read.indexOf(me)<0);
+  }).length;
+}
+function getDeptUnreadBadge(deptId){
+  var n=getUnreadCount(deptId);
+  return n>0?'<span class="unread-dot" title="'+n+' unread"></span>':'';
+}
+function openMsgPanel(deptId){
+  var dept=DEPTS.find(function(d){return d.id===deptId;});
+  msgDeptTarget=deptId;
+  el('msg-panel-title').textContent='\u{1F4AC} '+(dept?dept.name:deptId);
+  el('msg-panel').classList.add('open');
+  refreshMsgThread();
+  var msgs=getMsgs();var me=U?U.username:'';
+  msgs.forEach(function(m){if(m.dept===deptId){if(!m.read)m.read=[];if(m.read.indexOf(me)<0)m.read.push(me);}});
+  saveMsgsLocal(msgs);
+}
+function closeMsgPanel(){el('msg-panel').classList.remove('open');msgDeptTarget=null;}
+function refreshMsgThread(){
+  if(!msgDeptTarget)return;
+  var msgs=getMsgs().filter(function(m){return m.dept===msgDeptTarget;});
+  var thread=el('msg-thread');
+  if(!msgs.length){thread.innerHTML='<div style="font-size:12px;color:var(--hi);text-align:center;padding:20px">No messages yet.</div>';return;}
+  thread.innerHTML=msgs.map(function(m){
+    var isMe=U&&m.from===U.username;
+    return '<div style="display:flex;flex-direction:column;align-items:'+(isMe?'flex-end':'flex-start')+'">'
+      +'<div class="msg-bubble '+(isMe?'msg-from-me':'msg-from-other')+'">'
+      +esc(m.text)
+      +'<div class="msg-meta">'+m.fromRole.toUpperCase()+(isMe?' (you)':' \u00b7 '+m.from)+' \u00b7 '+new Date(m.ts).toLocaleString()+'</div>'
+      +'</div></div>';
+  }).join('');
+  thread.scrollTop=thread.scrollHeight;
+}
+function sendMsg(){
+  var inp=el('msg-txt-input');var text=(inp.value||'').trim();
+  if(!text||!msgDeptTarget||!U)return;
+  var msg={id:Date.now(),from:U.username,fromRole:U.role,dept:msgDeptTarget,
+    text:text,ts:new Date().toISOString(),read:[U.username]};
+  var msgs=getMsgs();msgs.push(msg);saveMsgsLocal(msgs);
+  inp.value='';refreshMsgThread();
+  if(typeof GAS_MSG_URL!=='undefined'&&GAS_MSG_URL){
+    fetch(GAS_MSG_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'sendMsg',msg:msg})}).catch(function(){});
+  }
+}
+function showMsgHistory(){
+  var msgs=getMsgs().slice().reverse();
+  el('modal-title').textContent='Message History';
+  el('modal-body').innerHTML=!msgs.length
+    ?'<div style="color:var(--hi);font-size:12px;text-align:center;padding:20px">No messages yet.</div>'
+    :msgs.map(function(m){
+      var dept=DEPTS.find(function(d){return d.id===m.dept;});
+      return '<div class="hist-item"><div class="hist-meta">'+m.fromRole.toUpperCase()+' \u00b7 '+m.from+' \u2192 '+(dept?dept.name:m.dept)+' \u00b7 '+new Date(m.ts).toLocaleString()+'</div><div class="hist-text">'+esc(m.text)+'</div></div>';
+    }).join('');
+  el('modal-overlay').style.display='flex';
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 // ═══════════════════════════════════════════════
 // CHANGE PASSWORD
@@ -1210,6 +1396,7 @@ document.addEventListener('DOMContentLoaded',function(){
       bodViewDept(dept);return;
     }
     if(t.closest('#sv-btn')){saveDept();return;}
+    if(t.id==='btn-unlock'||t.closest('#btn-unlock')){UNLOCKED[deptId+'_'+selY+'_'+selM]=true;buildDeptLeft();return;}
     if(t.id==='btn-chpw'||t.closest('#btn-chpw')){showChangePw();return;}
     if(t.dataset.quick){setQ(t.dataset.quick);return;}
     if(t.id==='dr-apply-d'||t.id==='dr-apply-b'){applyDR();return;}
@@ -1223,6 +1410,17 @@ document.addEventListener('DOMContentLoaded',function(){
     if(btn&&btn.classList.contains('vc-btn')){bodViewDept(btn.dataset.dept);return;}
     if(t.classList.contains('vc-btn')&&t.dataset.dept){bodViewDept(t.dataset.dept);}
   });
+  document.body.addEventListener('click',function(e){
+    var t=e.target;
+    if(t.id==='rp-open-msg'||t.closest('#rp-open-msg')){
+      var d=t.dataset.dept||(t.closest('[data-dept]')||{}).dataset.dept||deptId;
+      if(d)openMsgPanel(d);return;}
+    if(t.id==='rp-hist-btn'||t.closest('#rp-hist-btn')){showMsgHistory();return;}
+    if(t.id==='msg-panel-close-btn'){closeMsgPanel();return;}
+    if(t.id==='msg-send-btn'){sendMsg();return;}
+    if(t.id==='modal-close-x'||t===el('modal-overlay')){el('modal-overlay').style.display='none';return;}
+  });
+  el('msg-txt-input').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}});
 });
 </script>
 </body>
